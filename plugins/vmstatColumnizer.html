@@ -21,9 +21,9 @@ window.onload = function() {
 	var headers = { name: "Vmstat Columnizer", version: "1.0", description: "TOOLS -> Vmstat Columnizer -- places vmstat data into columns for readability macalcav@us.ibm.com - WASSDK" };
 	var provider = new eclipse.PluginProvider();		
 	var serviceImpl = {
-	    run: function(selectedText, text, selection) {    	
-	    	  	return {
-	    	  		     text: makeColumns(text),
+		run: function(selectedText, text, selection) {
+			return {
+				text: makeColumns(text),
 	    	  		selection:{start:0, end:0}
 	    	  	};
 		}
@@ -143,6 +143,7 @@ window.onload = function() {
 </script>
 </head>
 <body>
+	<h1>Vmstat Columnizer</h1>
 </body>
 </html>
 
