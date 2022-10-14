@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Javacore Summary Inline Orion Plugin</title>
-<script type="text/javascript" src="utilities/plugin.js"></script>
-<script type="text/javascript" src="utilities/Deferred.js"></script>
-<script type="text/javascript" src="utilities/javacoreSummary.js"></script>
+<script type="text/javascript" src="plugin.js"></script>
+<script type="text/javascript" src="javacoreSummary/Deferred.js"></script>
+<script type="text/javascript" src="javacoreSummary/javacoreSummary.js"></script>
 <script>
 /*eslint-env browser, amd*/
-/*global orion*/	
+/*global eclipse*/	
 
 //********************
 //********************
@@ -20,7 +20,7 @@
 
 window.onload = function() {
 	var headers = { name: "Javacore Summary Inline", version: "1.0", description: "TOOLS -> Javacore Summary Inline -- parse javacore for general overview - macalcav@us.ibm.com - WASSDK" };
-	var provider = new orion.PluginProvider(headers);		
+	var provider = new eclipse.PluginProvider(headers);		
 	var serviceImpl = {
 	    run: function(selectedText, text, selection) {
 	    	  	return {
