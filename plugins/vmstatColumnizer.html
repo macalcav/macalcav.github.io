@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Vmstat Columnizer</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//select a vmstat file -> Tools ->Vmstat Columnizer
+//********************
+//********************
+
+
+window.onload = function() {
+
+	var headers = { name: "Vmstat Columnizer", version: "1.0", description: "TOOLS -> Vmstat Columnizer -- places vmstat data into columns for readability macalcav@us.ibm.com - WASSDK" };
+	var provider = new eclipse.PluginProvider(headers);		
+	var serviceImpl = {
+	    run: function(selectedText, text, selection) {    	
+	    	  	return {
+	    	  		     text: makeColumns(text),
+	    	  		selection:{start:0, end:0}
+	    	  	};
+		}
+	};
+	
+	function getTopOfVmstatData(text){
+		var topOfVmstatData="";
+		var values;
+		var lines = text.split("\n");
+		for (var i = 0; i < lines.length; i++) {
+			lines[i]=lines[i].replace(/^\s+|\s+$/gm,'');//remove white space from both ends
+			lines[i]=lines[i].replace(/\s\s+/g, ' ');//remove multiple spaces
+			values = lines[i].split(" ");
+			if ((!isNaN(parseFloat(values[0])) && isFinite(values[0]))||(/^r b/.exec(lines[i]))){
+				break;
+			}
+			else {
+				topOfVmstatData+=lines[i]+"\n";
+			}			
+		}
+		return topOfVmstatData;
+	}
+	
+	function getHeadings(text){
+		var columnHeadings=[];
+		var width = getLongestLength(text);
+		var lines = text.split("\n");
+		for (var i = 0; i < lines.length; i++) {
+			lines[i]=lines[i].replace(/^\s+|\s+$/gm,'');//remove white space from both ends
+			lines[i]=lines[i].replace(/\s\s+/g, ' ');//remove multiple spaces
+			if (/^r b/.exec(lines[i])){//"r  b   avm   fre  ...
+				columnHeadings=lines[i].split(" ");
+				break;
+			}
+		}		
+		var headerString="";
+		for (var x=0; x<columnHeadings.length;x++){
+			var w = parseInt(width[x]);
+			var v = parseInt(columnHeadings[x].length);
+			var pad = w-v;
+			var spaces = "";
+			for (var z=0; z<=pad;z++){
+				spaces+=" ";						
+			}
+			headerString+=spaces+columnHeadings[x];
+		}
+		return headerString+"\n";	
+	}
+	
+	function getLongestLength(text){
+		var width=[];
+		var lines = text.split("\n");
+		for (var i = 0; i < lines.length; i++) {
+			lines[i]=lines[i].replace(/^\s+|\s+$/gm,'');//remove white space from both ends
+			lines[i]=lines[i].replace(/\s\s+/g, ' ');//remove multiple spaces
+			values = lines[i].split(" ");
+			if ((!isNaN(parseFloat(values[0])) && isFinite(values[0]))|| (/^r b/.exec(lines[i]))){//"r  b   avm   fre  ...{//numeric
+				for (var x=0; x<values.length;x++){
+					if (isNaN(parseInt(width[x]))){//if width is not set yet, set to zero
+						width[x]=0;
+					}
+					if (values[x].length > width[x]){
+						width[x]=values[x].length;
+					}
+				}
+			}
+		}
+		return width;
+	}
+	
+	function makeColumns(text){
+		var width = getLongestLength(text);
+		var output=getTopOfVmstatData(text)+getHeadings(text);
+		var lines = text.split("\n");
+		for (var i = 0; i < lines.length; i++) {
+			lines[i]=lines[i].replace(/^\s+|\s+$/gm,'');//remove white space from both ends
+			lines[i]=lines[i].replace(/\s\s+/g, ' ');//remove multiple spaces
+			values = lines[i].split(" ");
+			if (!isNaN(parseFloat(values[0])) && isFinite(values[0])){//numeric
+				for (var x=0; x<values.length;x++){
+					var w = parseInt(width[x]);
+					var v = parseInt(values[x].length);
+					var pad = w-v;
+					//window.alert(w);
+					var spaces = "";
+					for (var z=0; z<=pad;z++){
+						spaces+=" ";						
+					}
+					output+=spaces+values[x];
+				}
+				output+="\n";
+			}
+		}
+		return output;
+	}
+	
+	var serviceProperties = {
+		contentType: ["text/plain"],
+	  	name: "Vmstat Columnizer",
+	  	id: "orion.edit.vmstatColumnizer",
+	  	key : [ "v", true, false, true ]//ctrl+alt+v
+	};
+	
+        provider.registerServiceProvider("orion.core.contenttype", {}, {
+  	contentTypes: [
+		{
+			id: "text/out",
+			name: "Out File",
+			extension: ["out"],
+			"extends": "text/plain"
+		}
+	]});
+	
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+        provider.connect();	
+};
+</script>
+</head>
+<body>
+</body>
+</html>
+
+/*
+ *  contentType: ["application/javascript"],
+ run : function(selectedText, text, selection) {
+   return 
+    {text: text.substring(0,selection.start) + "/*" + 
+           text.substring(selection.start,selection.end) + "*/" + 
+           text.substring(selection.end),
+     selection: {start:selection.start,end:selection.end+4}};
+ }
+
+ */
