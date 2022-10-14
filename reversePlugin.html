@@ -8,7 +8,7 @@
         
       <script>
           var headers = { name: "My Plugin", version: "1.0", description: "My first Orion plugin." };
-          var provider = new orion.PluginProvider(headers);
+          var provider = new orion.PluginProvider();
           var serviceImpl = {
                   run: function(text) {
                       return text.split("").reverse().join("");
