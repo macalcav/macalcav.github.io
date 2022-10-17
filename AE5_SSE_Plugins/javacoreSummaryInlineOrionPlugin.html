@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Javacore Summary Inline Orion Plugin</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script type="text/javascript" src="utilities/Deferred.js"></script>
+<script type="text/javascript" src="javacoreSummary/javacoreSummary.js"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//select a javacore*.txt file -> Tools ->Javacore Summary Inline
+//********************
+//********************
+
+
+window.onload = function() {
+	var headers = { name: "Javacore Summary Inline", version: "1.0", description: "TOOLS -> Javacore Summary Inline -- parse javacore for general overview - macalcav@us.ibm.com - WASSDK" };
+	var provider = new eclipse.PluginProvider(headers);		
+	var serviceImpl = {
+	    run: function(selectedText, text, selection) {
+	    	  	return {
+	    	  		     text: "Javacore Summary\n*****************\n"+ getJavacoreSummaryText(text) +"\n\nJavacore Summary End\n*******************\n\n"+text,
+	    	  		selection:{start:0, end:0}
+	    	  	};
+		}
+	};
+		
+	var serviceProperties = {
+		contentType: ["text/plain"],
+	  	name: "Javacore Summary Inline",
+	  	id: "orion.edit.javacoreSummaryInline",
+	  	key : [ "j", true,false,true ]//ctrl+alt+j
+	};		
+	
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+    provider.connect();	
+};
+</script>
+</head>
+<body>
+</body>
+</html>
+
+/*
+ *  contentType: ["application/javascript"],
+ run : function(selectedText, text, selection) {
+   return 
+    {text: text.substring(0,selection.start) + "/*" + 
+           text.substring(selection.start,selection.end) + "*/" + 
+           text.substring(selection.end),
+     selection: {start:selection.start,end:selection.end+4}};
+ }
+
+ */
