@@ -19,7 +19,10 @@
 
 
 window.onload = function() {
-	var headers = { name: "Javacore Summary Outline", version: "1.0", description: "View -> Slideout -> Javacore Summary Outline -- parse javacore for general overview - macalcav@us.ibm.com - WASSDK" };
+	var headers = { 
+		name: "Javacore Summary Outline", version: "2.0", 
+		description: "View -> Slideout -> Javacore Summary Outline -- parse javacore for general overview - macalcav@us.ibm.com" 
+	};
 	var provider = new eclipse.PluginProvider(headers);		
 	var serviceImpl = {
 	    getOutline: function(contents,title) {	    	
