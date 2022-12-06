@@ -182,7 +182,7 @@ function infoMessageCode(line){
 }
 
 function traceString(line){
-	return line.split(':').pop();
+	line.split('TRAS0017I: ').pop(1);
 }
 
 function warningMessageCode(line){
