@@ -117,7 +117,7 @@ window.onload = function() {
 				
 				if (/UTLS0008W/.exec(line)){
 				//[7/12/13 18:14:38:494 IST] 00000072 AlarmThreadMo W   UTLS0008W: The return of alarm thread "Deferrable Alarm : 3" (00000048) to the alarm thread pool has been delayed for 10496 milliseconds. This may be preventing normal alarm function within the application server. The alarm listener stack trace is as follows:
-				    condensedString = timeStamp(line)+" "+warningMessageCode(line)+threadName(line)+" Delay: " +  msToTime(getLastNumberFromString(line));
+				    condensedString = timeStamp(line)+" "+warningMessageCode(line)+" "+threadName(line)+" Delay: " +  msToTime(getLastNumberFromString(line));
 					systemOutOutline.push({
 	            		label: condensedString,//lines[i],
 	            		line: i+1
@@ -263,4 +263,3 @@ function getLastNumberFromString(line){
     [1/26/16 9:22:16:909 NZDT] 0003ebfb ThreadMonitor W   WSVR0605W: Thread "WebContainer : 364" (0003b646) has been active for 1036363 milliseconds and may be hung.  There is/are 1 thread(s) in total in the server that may be hung.
   </body>
 </html>
-
