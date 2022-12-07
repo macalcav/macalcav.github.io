@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>orion.edit.references Test</title>
+<title>Find References in Folder using orion.edit.references Test</title>
 <script type="text/javascript" src="utilities/plugin.js"></script>
 <script type="text/javascript" src="utilities/Deferred.js"></script>
 <script>
@@ -15,42 +15,42 @@
 //
 //********************
 //********************
-
-
   window.onload = function() {
-    var provider = new eclipse.PluginProvider();
-	
-    //references
-    provider.registerServiceProvider("orion.edit.references", {
-        findReferences: function findReferences(editorContext, context) {
-          window.alert("context" +"\n"+ context);
-          var  outline = [];
-          var lines = editorContext.getText().contents.split("\n");
-          window.alert(context + "\n\n" + lines);
-
-          for (var i=0; i < lines.length; i++) {
-            var line = lines[i];
-            if (/TRAS0017I/.exec(line)){
-              outline.push({
-                label: lines[i],
-                line: i+1
-              });
-            }
-            continue;
-          }
-
-          return outline;
-        },
-        {
-          contentType: ["application/javascript"]
-        }
-      });
-
-      provider.connect();
- };
+	  var provider = new eclipse.PluginProvider();
+	  //references
+	  provider.registerServiceProvider("orion.edit.references", {
+		  findReferences: function findReferences(editorContext, context) {
+			  window.alert("context" +"\n"+ context);
+			  var foundReferences = [];
+			  return editorContext.getText().then(function(contents) {
+				  var lines = contents.split(/\r?\n/);
+				  for (var i=0; i < lines.length; i++) {
+					  var line = lines[i];
+					  var match = /TRAS0017I/.exec(line);
+					  if (!match) {
+						  continue;
+					  }
+					  foundReferences.push({
+						  description: "Mixed spaces and tabs.",
+						  line: i + 1,
+						  start: match.index + 1,
+						  end: match.index + match[0].length + 1
+					  });
+				  }
+				  var result = { foundReferences: foundReferences };
+				  return result;
+			  });
+		  }
+	  },
+	  {
+	    contentType: ["application/javascript"]
+	  });
+    provider.connect();
+  };
 </script>
 </head>
 <body>
   <h1>References in Folder Test AE5 Plugin</h1>
+  <br><a href="https://macalcav.github.io/AE5_SSE_Plugins/referencesInFolderTest.html">referencesInFolderTest</a>
 </body>
 </html>
