@@ -17,6 +17,9 @@
 //********************
  window.onload = function() {
    var provider = new eclipse.PluginProvider();
+  
+  //https://wiki.eclipse.org/Orion/Documentation/Developer_Guide/Plugging_into_the_editor#orion.edit.references
+  
    provider.registerServiceProvider("orion.edit.references", {
      findReferences: function findReferences(editorContext, context) {
        window.alert("context" +"\n"+ context);
