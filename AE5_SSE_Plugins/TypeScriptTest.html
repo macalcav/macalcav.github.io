@@ -44,18 +44,6 @@ window.onload = function() {
 		parentPath : "com.ibm.isa.sse.typescript.commands",
 	});
 	
-	//TypeScript GetUppercase
-	provider.registerServiceProvider("orion.edit.command", {
-		run : function(text) {
-			return getTypeScriptUppercase(text);
-		}
-	},
-	{
-		name : "TypeScriptGetUppercase",
-		id : "com.ibm.isa.sse.typescript.commands.typeScriptGetUppercase",
-		parentPath : "com.ibm.isa.sse.typescript.commands",
-	});
-	
 	provider.connect();
 };
 </script>
