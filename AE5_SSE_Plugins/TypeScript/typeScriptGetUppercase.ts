@@ -1,3 +1,3 @@
-function getUppercase(text:string) {
+function getTypeScriptUppercase(text:string) {
 	return text.toUppercase();
 }
