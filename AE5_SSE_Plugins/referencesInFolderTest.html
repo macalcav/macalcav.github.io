@@ -15,36 +15,34 @@
 //
 //********************
 //********************
-  window.onload = function() {
-	  var provider = new eclipse.PluginProvider();
-	  //references
-	  provider.registerServiceProvider("orion.edit.references", {
-		  findReferences: function findReferences(editorContext, context) {
-			  window.alert("context" +"\n"+ context);
-			  var matches = [];
-			  return editorContext.getText().then(function(contents) {
-				  var lines = contents.split(/\r?\n/);
-				  for (var i=0; i < lines.length; i++) {
-					  var line = lines[i];
-					  var stringToLookFor="TRAS0017I";
-					  var match = stringToLookFor.exec(line);
-					  if (!match) {
-						  continue;
-					  }
-					  matches.push({
-						  label: line,
-						  line: i+1
-					  });
-				  }
-				  return matches;
-			  });
-		  });
-	  },
-	  {
-	    contentType: ["application/javascript"]
-	  });
-    provider.connect();
-  };
+ window.onload = function() {
+   var provider = new eclipse.PluginProvider();
+   provider.registerServiceProvider("orion.edit.references", {
+     findReferences: function findReferences(editorContext, context) {
+       window.alert("context" +"\n"+ context);
+       var matches = [];
+       return editorContext.getText().then(function(contents) {
+         var lines = contents.split(/\r?\n/);
+         for (var i=0; i < lines.length; i++) {
+           var line = lines[i];
+           var stringToLookFor="TRAS0017I";
+           var match = stringToLookFor.exec(line);
+           if (!match) {
+             continue;
+           }
+           matches.push({
+             label: line,
+             line: i+1
+           });
+         };
+         return matches;
+       });
+     }
+   },{
+     contentType: ["application/javascript"]
+   });
+   provider.connect(); 
+ };
 </script>
 </head>
 <body>
