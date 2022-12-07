@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>orion.edit.references Test</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script type="text/javascript" src="utilities/Deferred.js"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//
+//********************
+//********************
+
+
+  window.onload = function() {
+    var provider = new eclipse.PluginProvider();
+	
+    //references
+    provider.registerServiceProvider("orion.edit.references", {
+        findReferences: function findReferences(editorContext, context) {
+          window.alert("context" +"\n"+ context);
+          var  outline = [];
+          var lines = editorContext.getText().contents.split("\n");
+          window.alert(context + "\n\n" + lines);
+
+          for (var i=0; i < lines.length; i++) {
+            var line = lines[i];
+            if (/TRAS0017I/.exec(line)){
+              outline.push({
+                label: lines[i],
+                line: i+1
+              });
+            }
+            continue;
+          }
+
+          return outline;
+        },
+        {
+          contentType: ["application/javascript"]
+        }
+      });
+
+      provider.connect();
+ };
+</script>
+</head>
+<body>
+  <h1>References in Folder Test AE5 Plugin</h1>
+</body>
+</html>
