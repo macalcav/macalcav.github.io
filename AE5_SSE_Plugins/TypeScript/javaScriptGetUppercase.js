@@ -1,3 +1,3 @@
 function getJavaScriptUppercase(text) {
-	return text.toUppercase();
+	return text.toUpperCase();
 }
