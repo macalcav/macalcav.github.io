@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>TypeScript Test</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script type="text/textscript" src="utilities/typeScriptTest.ts"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//
+//********************
+//********************
+
+
+window.onload = function() {
+	var header = { 
+    name: "TypeScript Test", 
+    version: "1.0", 
+    description: "TypeScript Test" 
+  };
+	var provider = new eclipse.PluginProvider(header);	
+
+  
+  //Menu Item "SSE Text Conversion Commands"
+  provider.registerServiceProvider("orion.edit.command.category", {}, {
+    id : "com.ibm.isa.sse.typescript.commands", 
+    name: "SSE TypeScript Commands",
+    tooltip : "SSE TypeScript Commands"
+  });
+  
+  //Uppercase
+  provider.registerServiceProvider("orion.edit.command", {
+    run : function(text) {
+      return getUppercase(text);
+    }
+  },
+  {
+    name : "GetUppercase",
+    id : "com.ibm.isa.sse.typescript.commands.getUppercase",
+    parentPath : "com.ibm.isa.sse.typescript.commands",
+    key : [ "g", true, false, true ]//ctril+alt+g
+  });
+		
+	var serviceProperties = {
+		contentType: ["text/plain"],
+	  	name: "TypeScriptTest",
+	  	id: "orion.edit.typeScriptTest",
+	  	key : [ "t", true, false, true ] //ctrl+alt+t
+	};		
+	
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+	provider.connect();	
+};
+</script>
+</head>
+<body>
+  <h1>TypeScript Test AE5 Plugin</h1>
+</body>
+</html>
