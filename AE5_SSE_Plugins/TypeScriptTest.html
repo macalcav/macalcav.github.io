@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>TypeScript Test</title>
 <script type="text/javascript" src="utilities/plugin.js"></script>
-//<script type="text/textscript" src="TypeScript/typeScriptGetUppercase.ts"></script>
-<script type="text/textscript" src="TypeScript/javaScriptGetUppercase.js"></script>
+<script type="text/javascript" src="TypeScript/javaScriptGetUppercase.js"></script>
+<script type="text/typescript" src="TypeScript/typeScriptGetUppercase.ts"></script>
 <script>
 /*eslint-env browser, amd*/
 /*global eclipse*/	
@@ -33,17 +33,28 @@ window.onload = function() {
 		tooltip : "SSE TypeScript Commands"
 	});
 	
+	//JavaScript GetUppercase
+	provider.registerServiceProvider("orion.edit.command", {
+		run : function(text) {
+			return getJavaScriptUppercase(text);
+		}
+	},
+	{
+		name : "JavaScriptGetUppercase",
+		id : "com.ibm.isa.sse.typescript.commands.javaScriptGetUppercase",
+		parentPath : "com.ibm.isa.sse.typescript.commands",
+	});
+	
 	//TypeScript GetUppercase
 	provider.registerServiceProvider("orion.edit.command", {
 		run : function(text) {
-			return getUppercase(text);
+			return getTypeScriptUppercase(text);
 		}
 	},
 	{
 		name : "TypeScriptGetUppercase",
-		id : "com.ibm.isa.sse.typescript.commands.javaScriptGetUppercase",
+		id : "com.ibm.isa.sse.typescript.commands.typeScriptGetUppercase",
 		parentPath : "com.ibm.isa.sse.typescript.commands",
-		key : [ "g", true, false, true ]//ctril+alt+g
 	});
 	
 	provider.connect();
