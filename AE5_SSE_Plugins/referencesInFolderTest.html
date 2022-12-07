@@ -21,26 +21,24 @@
 	  provider.registerServiceProvider("orion.edit.references", {
 		  findReferences: function findReferences(editorContext, context) {
 			  window.alert("context" +"\n"+ context);
-			  var foundReferences = [];
+			  var matches = [];
 			  return editorContext.getText().then(function(contents) {
 				  var lines = contents.split(/\r?\n/);
 				  for (var i=0; i < lines.length; i++) {
 					  var line = lines[i];
-					  var match = /TRAS0017I/.exec(line);
+					  var stringToLookFor="TRAS0017I";
+					  var match = stringToLookFor.exec(line);
 					  if (!match) {
 						  continue;
 					  }
-					  foundReferences.push({
-						  description: "Mixed spaces and tabs.",
-						  line: i + 1,
-						  start: match.index + 1,
-						  end: match.index + match[0].length + 1
+					  matches.push({
+						  label: line,
+						  line: i+1
 					  });
 				  }
-				  var result = { foundReferences: foundReferences };
-				  return result;
+				  return matches;
 			  });
-		  }
+		  });
 	  },
 	  {
 	    contentType: ["application/javascript"]
