@@ -33,7 +33,18 @@ window.onload = function() {
 	  	name: "Test Load",
 	  	id: "orion.edit.TestLoad",
 	  	key : [ "l", true, false, true ]//ctrl+alt+l
-	};		
+	};
+	
+	provider.registerServiceProvider("orion.core.contenttype", {}, {
+		contentTypes: [
+			{
+				id: "text/log",
+				name: "Log File",
+				extension: ["log"],
+				"extends": "text/plain"
+			}
+		]
+	});
 	
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
 	provider.connect();
