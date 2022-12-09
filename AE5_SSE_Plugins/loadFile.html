@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Load File</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//
+//********************
+//********************
+
+
+window.onload = function() {
+	var headers = { name: "Load File", version: "1.0", description: "Load Whole File - macalcav@us.ibm.com" };
+	var provider = new eclipse.PluginProvider(headers);		
+	var serviceImpl = {
+	    run: function(selectedText, text, selection) {
+		    return {
+			    text: text,
+			    selection:{start:0, end:0}
+		    };
+	    }
+	};
+		
+	var serviceProperties = {
+		contentType: ["text/plain"],
+	  	name: "Test Load",
+	  	id: "orion.edit.TestLoad",
+	  	key : [ "l", true, false, true ]//ctrl+alt+l
+	};		
+	
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+	provider.connect();
+};
+</script>
+</head>
+<body>
+  <h1>Load File Plugin</h1>
+</body>
+</html>
