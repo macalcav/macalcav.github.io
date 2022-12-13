@@ -27,16 +27,8 @@ window.onload = function() {
 		    };
 	    }
 	};
-	
-	var serviceProperties = {
-	  	name: "Load Whole File",
-		id : "com.ibm.isa.sse.file.loadFile",
-//	  	id: "orion.edit.loadFile",
-	  	key : [ "l", true, false, true ]//ctrl+alt+l
-	};
-	
-/*	
-	//Menu Item "File Commands"
+		
+	//Menu Item "SSE File Commands"
         provider.registerServiceProvider("orion.edit.command.category", {}, {
 		id : "com.ibm.isa.sse.file.commands", 
 		name: "SSE File Commands",
@@ -46,11 +38,8 @@ window.onload = function() {
 	var serviceProperties = {
 	  	name: "Load Whole File",
 		id : "com.ibm.isa.sse.file.commands.loadFile",
-		parentPath : "com.ibm.isa.sse.file.commands",
-	  	key : [ "l", true, false, true ]//ctrl+alt+l
+		parentPath : "com.ibm.isa.sse.file.commands"
 	};
-	
-*/
 	
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
 	provider.connect();
@@ -58,6 +47,8 @@ window.onload = function() {
 </script>
 </head>
 <body>
-  <h1>Load File Plugin</h1>
+	<h1>Load Whole File Plugin</h1>
+	Select a file in the Online Editor then Tools-> SSE File Commands -> Load Whole File
+	<br><a href="https://github.com/macalcav/macalcav.github.io">macalcav.github.io</a>
 </body>
 </html>
