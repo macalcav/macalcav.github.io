@@ -120,11 +120,17 @@ window.onload = function() {
 		return output;
 	}
 	
+	//Menu Item "SSE File Commands"
+        provider.registerServiceProvider("orion.edit.command.category", {}, {
+		id : "com.ibm.isa.sse.file.commands", 
+		name: "SSE File Commands",
+		tooltip : "SSE File Commands"
+	});
+	
 	var serviceProperties = {
-		contentType: ["text/plain"],
 	  	name: "Vmstat Columnizer",
-	  	id: "orion.edit.vmstatColumnizer",
-	  	key : [ "v", true, false, true ]//ctrl+alt+v
+	  	id: "com.ibm.isa.sse.file.commands.vmstatColumnizer",
+		parentPath : "com.ibm.isa.sse.file.commands"
 	};
 	
         provider.registerServiceProvider("orion.core.contenttype", {}, {
