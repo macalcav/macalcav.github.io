@@ -27,7 +27,12 @@ window.onload = function() {
 		    };
 	    }
 	};
-		
+	var serviceProperties = {
+	  	name: "Load Whole File",
+	  	id: "orion.edit.LoadFile",
+	  	key : [ "l", true, false, true ]//ctrl+alt+l
+	};
+/*		
 	var serviceProperties = {
 		contentType: ["text/plain"],
 		contentTypes: [
@@ -40,8 +45,7 @@ window.onload = function() {
 	  	id: "orion.edit.LoadFile",
 	  	key : [ "l", true, false, true ]//ctrl+alt+l
 	};
-	
-/*	
+		
         provider.registerServiceProvider("orion.core.contenttype", {}, {
 		contentTypes: [
 			{
