@@ -27,36 +27,31 @@ window.onload = function() {
 		    };
 	    }
 	};
+	
 	var serviceProperties = {
 	  	name: "Load Whole File",
-	  	id: "orion.edit.LoadFile",
+		id : "com.ibm.isa.sse.file.loadFile",
+//	  	id: "orion.edit.loadFile",
 	  	key : [ "l", true, false, true ]//ctrl+alt+l
 	};
-/*		
-	var serviceProperties = {
-		contentType: ["text/plain"],
-		contentTypes: [
-			id: "text/log",
-			name: "Log",
-			extension: ["log"],
-			"extends": "text/plain"			
-		],
-	  	name: "Load Whole File",
-	  	id: "orion.edit.LoadFile",
-	  	key : [ "l", true, false, true ]//ctrl+alt+l
-	};
-		
-        provider.registerServiceProvider("orion.core.contenttype", {}, {
-		contentTypes: [
-			{
-				id: "text/log",
-				name: "Log File",
-				extension: ["log"],
-				"extends": "text/plain"
-			}
-		]
+	
+/*	
+	//Menu Item "File Commands"
+        provider.registerServiceProvider("orion.edit.command.category", {}, {
+		id : "com.ibm.isa.sse.file.commands", 
+		name: "SSE File Commands",
+		tooltip : "SSE File Commands"
 	});
-*/	
+	
+	var serviceProperties = {
+	  	name: "Load Whole File",
+		id : "com.ibm.isa.sse.file.commands.loadFile",
+		parentPath : "com.ibm.isa.sse.file.commands",
+	  	key : [ "l", true, false, true ]//ctrl+alt+l
+	};
+	
+*/
+	
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
 	provider.connect();
 };
