@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>TopdashH Summary Outline Orion Plugin</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script type="text/javascript" src="utilities/Deferred.js"></script>
+<script type="text/javascript" src="topdashH/topdashH_parse.js"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//select a topdashH*.out file in the Orion Editor then View-> Slideout -> TopdashH Summary Outline
+//********************
+//********************
+
+
+window.onload = function() {
+	var headers = { 
+		name: "TopdashH Summary Outline", version: "1.0", 
+		description: "View -> Slideout -> TopdashH Summary Outline -- parse TopdashH for general overview - macalcav@us.ibm.com" 
+	};
+	var provider = new eclipse.PluginProvider(headers);		
+	var serviceImpl = {
+	    getOutline: function(contents,title) {	    	
+	    	return getTopdashHOutput(contents);    //returns an object outline{label: text, line: number }		
+		}
+	};
+		
+	var serviceProperties = {
+		contentType: ["text/plain"],
+	  	name: "TopdashH Summary Outline",
+	  	id: "orion.outliner.javacoreSummaryOutline",
+	  	key : [ "h", true,true,false ]//ctrl+shift+h
+	};		
+	
+	provider.registerServiceProvider("orion.edit.outliner",serviceImpl, serviceProperties);
+	provider.connect();	
+};
+</script>
+</head>
+  <body>
+    <h1>TopdashH_Outline.html from AE5_SSE_Plugins by Michele Calcavecchia - macalcav@us.ibm.com</h1>
+    select a topdashH*.out file in the Orion Editor then View-> Slideout -> TopdashH Summary Outline
+    <br><a href="https://github.com/macalcav/macalcav.github.io">macalcav.github.io</a>
+  </body>
+</html>
