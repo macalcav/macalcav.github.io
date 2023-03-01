@@ -1,6 +1,7 @@
 function getTopdashHOutput(contents) {
   
   //window.alert(title + " started.");
+  window.alert("topdashH started.");
   var outline = [];
   var lines = contents.split(/\r?\n/);
   var line;
