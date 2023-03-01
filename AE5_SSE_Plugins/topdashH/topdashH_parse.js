@@ -15,7 +15,7 @@ function getTopdashHOutput(contents) {
         label: line,//line.substr(line.indexOf("javacore.")),
         line: i+1
       });	
-      break;
+      continue;
     }
     if (/^top/.exec(line)) {//top - 11:48:08 up 25 days, 16:14,  1 user,  load average: 9.94, 8.45, 5.98
       //window.alert("top time: "+ line);
@@ -23,7 +23,7 @@ function getTopdashHOutput(contents) {
         label: line,
         line: i+1  
       });	
-      break;
+      continue;
     }
     if (/^    PID/.exec(line)) {//    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
       //window.alert("PID: "+ line);
@@ -36,7 +36,7 @@ function getTopdashHOutput(contents) {
         line: i+1
       });
       top5count=0;
-      break;
+      continue;
     }
     if (/^[1-9]\d*/.exec(line))&& (top5count<5) {//3956742 appadmin  20   0   15.9g   4.6g 132228 R  40.9   8.4   2:07.89 WebCont+
       //window.alert("TID: "+ line);
@@ -45,7 +45,7 @@ function getTopdashHOutput(contents) {
         line: i+1,
         top5count = top5count+1
       });	
-      break;
+      continue;
     }
   }
   return outline;
