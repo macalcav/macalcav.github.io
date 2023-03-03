@@ -1,7 +1,7 @@
 function getTopdashHOutput(contents) {
   
   //window.alert(title + " started.");
-  window.alert("topdashH started.");
+  //window.alert("topdashH started.");
   var outline = [];
   var lines = contents.split(/\r?\n/);
   var line;
@@ -43,8 +43,8 @@ function getTopdashHOutput(contents) {
       outline.push({
         label: line,
         line: i+1,
-        top5count = top5count+1
-      });	
+      });
+      top5count = top5count+1         	
       continue;
     }
   }
