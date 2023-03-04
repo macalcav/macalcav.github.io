@@ -20,6 +20,10 @@ function getTopdashHOutput(contents) {
     
     if (/^\s.+?PID/.exec(line)) {//    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
       outline.push({
+        label: " ",
+        line: i+1
+      });
+      outline.push({
         label: line,
         line: i+1
       });
@@ -28,6 +32,15 @@ function getTopdashHOutput(contents) {
         line: i+1
       });
       top5count=0;
+      continue;
+    }
+    
+    if ((/^[1-9]\d/.exec(line))&& (top5count<5)) {//3956742 appadmin  20   0   15.9g   4.6g 132228 R  40.9   8.4   2:07.89 WebCont+
+      outline.push({
+        label: line,
+        line: i+1,
+      });
+      top5count = top5count+1         	
       continue;
     }
     
