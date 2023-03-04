@@ -1,5 +1,48 @@
 function getTopdashHOutput(contents) {
   
+  var outline = [];
+  var lines = contents.split(/\r?\n/);
+  var line;
+  var i;
+  var top5count=0;
+  
+  for (i=0; i < lines.length; i++) {
+    
+    line = lines[i];
+    
+    if  (/^Collected against PID/.exec(line)){
+      outline.push({
+        label: line,
+        line: i+1
+      });
+      continue;
+    }
+    
+    if (/^\s.+?PID/.exec(line)) {//    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+      outline.push({
+        label: line,
+        line: i+1
+      });
+      outline.push({
+        label: "=========================================================================",
+        line: i+1
+      });
+      top5count=0;
+      continue;
+    }
+    
+  }//end for loop
+  
+  return outline;
+  
+}//end function
+
+
+
+
+/*
+function getTopdashHOutput(contents) {
+  
   //window.alert(title + " started.");
   //window.alert("topdashH started.");
   var outline = [];
@@ -38,7 +81,7 @@ function getTopdashHOutput(contents) {
       top5count=0;
       continue;
     }
-    if (/^[1-9]\d*/.exec(line))&& (top5count<5) {//3956742 appadmin  20   0   15.9g   4.6g 132228 R  40.9   8.4   2:07.89 WebCont+
+    if (/^[1-9]\d/.exec(line))&& (top5count<5) {//3956742 appadmin  20   0   15.9g   4.6g 132228 R  40.9   8.4   2:07.89 WebCont+
       //window.alert("TID: "+ line);
       outline.push({
         label: line,
@@ -50,3 +93,4 @@ function getTopdashHOutput(contents) {
   }
   return outline;
 }
+*/
