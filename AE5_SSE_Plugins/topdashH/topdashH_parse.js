@@ -38,7 +38,7 @@ function getTopdashHOutput(contents) {
     if ((/^[1-9]\d/.exec(line))&& (top5count<5)) {//3956742 appadmin  20   0   15.9g   4.6g 132228 R  40.9   8.4   2:07.89 WebCont+
       var tidHexValue = /(^[1-9]\d.+?)\s/.exec(line);
       outline.push({
-        label: line+" "+hexToDec(tidHexValue[0]),
+        label: line+" "+decToHex(tidHexValue[0]),
         line: i+1,
       });
       top5count = top5count+1         	
@@ -51,6 +51,6 @@ function getTopdashHOutput(contents) {
   
 }//end function
 
-function hexToDec(hex){
-	return parseInt(hex, 16);
+function decToHex(dec) {
+	return dec +"="+ parseFloat(dec).toString(16);
 }
