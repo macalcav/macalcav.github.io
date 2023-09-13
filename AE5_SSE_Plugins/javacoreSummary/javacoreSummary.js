@@ -165,17 +165,19 @@ function getJavacoreSummaryOutline(contents) {
 					label: "------------------------",
 					line: i+1  
 				});
-				while (/^NULL /.exec(line)==null){//get stack trace of Exit thread
-					var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+				for (j=i; j < lines.length; j++) {
+					line = lines[j];
+					var exitThread= String(line).replace(/\s\s+/g, ' ');//remove extra spaces
 					if (/STACKTRACE /.exec(line)){
 						outline.push({
 							label: exitThread.substr(exitThread.indexOf(" ")),
-							line: i+1  
+							line: j+1  
 						});
 					}
-					line = lines[i++];
+					if (/^NULL /.exec(line)){
+						break;
+					}
 				}
-				break;
 			}
 		}
 		
@@ -321,7 +323,8 @@ function getJavacoreSummaryOutline(contents) {
 					label: "------------------------",
 					line: i+1  
 				});
-				while (/^NULL /.exec(line)==null){//get stack trace of current thread
+				for (j=i; j < lines.length; j++) {
+					line = lines[j];
 					var currentThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
 					if (/STACKTRACE /.exec(line)){
 						outline.push({
@@ -329,11 +332,11 @@ function getJavacoreSummaryOutline(contents) {
 							line: i+1  
 						});
 					}
-					line = lines[i++];
+					if (/^NULL /.exec(line)){
+						break;
+					}
 				}
-				continue;
 			}
-
 
 		}//end of contents loop
 		return outline;
@@ -463,14 +466,16 @@ function getJavacoreSummaryText(text){
 				summary+=("\n\nEXIT\n--------------------");
 				var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
 				summary+="\n"+exitThread.substr(exitThread.indexOf(" ")) ;	
-				while (/^NULL /.exec(line)==null){
-					var exitStackThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+				for (j=i; j < lines.length; j++) {
+					line = lines[j];
+					var exitStackThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
 					if (/STACKTRACE /.exec(line)){
 						summary+="\n"+exitStackThread.substr(exitStackThread.indexOf(" ")) ;						
 					}
-					line = lines[i++];
+					if (/^NULL /.exec(line){
+						break;
+					}
 				}
-				break;
 			}
 		}
 		for (i=0; i < lines.length; i++) {
@@ -546,14 +551,16 @@ function getJavacoreSummaryText(text){
 			}
 			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
 				summary+=("\n\nCurrent Thread\n--------------------");
-				while (/^NULL /.exec(line)==null){
-					var currentThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+				for (j=i; j < lines.length; j++) {
+					line = lines[j];
+					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
 					if (/STACKTRACE /.exec(line)){
-						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;						
+						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;	
 					}
-					line = lines[i++];
+					if (/^NULL /.exec(line){
+						break;
+					}
 				}
-				continue;
 			}
 
 		}//end of contents loop
