@@ -181,6 +181,37 @@ function getJavacoreSummaryOutline(contents) {
 				}
 			}
 		}
+	        //CURRENT THREAD
+	        for (i=0; i < lines.length; i++) {
+			line = lines[i];
+			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
+				outline.push({
+					label: " ",
+					line: i+1  
+				});
+				outline.push({
+					label: "Current Thread",
+					line: i+1  
+				});
+				outline.push({
+					label: "------------------------",
+					line: i+1  
+				});
+				for (j=i; j < lines.length; j++) {
+					line = lines[j];
+					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
+					if (/STACKTRACE /.exec(line)){
+						outline.push({
+							label: currentThread.substr(currentThread.indexOf(" ")),
+							line: j+1  
+						});
+					}
+					if (/^NULL/.exec(line)){
+						break;
+					}
+				}
+			}
+		}
 		
 		for (i=0; i < lines.length; i++) {
 			
@@ -310,33 +341,6 @@ function getJavacoreSummaryOutline(contents) {
 					line: i+1  
 				});
 				continue;
-			}
-			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
-				outline.push({
-					label: " ",
-					line: i+1  
-				});
-				outline.push({
-					label: "Current Thread",
-					line: i+1  
-				});
-				outline.push({
-					label: "------------------------",
-					line: i+1  
-				});
-				for (j=i; j < lines.length; j++) {
-					line = lines[j];
-					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)){
-						outline.push({
-							label: currentThread.substr(currentThread.indexOf(" ")),
-							line: j+1  
-						});
-					}
-					if (/^NULL/.exec(line)){
-						break;
-					}
-				}
 			}
 
 		}//end of contents loop
@@ -479,6 +483,25 @@ function getJavacoreSummaryText(text){
 				}
 			}
 		}
+	        //get CURRENT THREAD
+	        for (i=0; i < lines.length; i++) {
+			line = lines[i];
+			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
+				summary+=("\n\nCurrent Thread\n--------------------");
+				for (j=i; j < lines.length; j++) {
+					line = lines[j];
+					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
+					if (/STACKTRACE /.exec(line)){
+						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;	
+					}
+					if (/^NULL/.exec(line){
+						break;
+					}
+				}
+			}
+		}
+
+	
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
@@ -549,19 +572,6 @@ function getJavacoreSummaryText(text){
 				summary+=("\n");
 				summary+=("\n"+	lines[i].substr(lines[i].indexOf("Current")));
 				continue;
-			}
-			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
-				summary+=("\n\nCurrent Thread\n--------------------");
-				for (j=i; j < lines.length; j++) {
-					line = lines[j];
-					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)){
-						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;	
-					}
-					if (/^NULL/.exec(line){
-						break;
-					}
-				}
 			}
 
 		}//end of contents loop
