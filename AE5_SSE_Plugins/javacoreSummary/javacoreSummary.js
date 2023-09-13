@@ -295,7 +295,7 @@ function getJavacoreSummaryOutline(contents) {
 				});
 				while (/^NULL /.exec(line)==null){//get stack trace of current thread
 					var currentThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)|| /3XMTHREADINFO /.exec(line)){
+					if (/STACKTRACE /.exec(line)){
 						outline.push({
 							label: currentThread.substr(currentThread.indexOf(" ")),
 							line: i+1  
@@ -527,7 +527,7 @@ function getJavacoreSummaryText(text){
 				summary+=("\n\nCurrent Thread\n--------------------");
 				while (/^NULL /.exec(line)==null){
 					var currentThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)|| /3XMTHREADINFO /.exec(line)){
+					if (/STACKTRACE /.exec(line)){
 						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;						
 					}
 					line = lines[i++];
