@@ -232,11 +232,12 @@ function getJavacoreSummaryOutline(contents) {
 		if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
 			var CPUINFO=line;
 			outline.push({
-				label: "~",
+				label: " ",
 				line: i+1  
 			});
 			outline.push({
-				label: CPUINFO.substr(CPUINFO.indexOf("Entitled")),
+				//label: CPUINFO.substr(CPUINFO.indexOf("Entitled")),
+				label: CPUINFO.substr(CPUINFO.indexOf("CPU  ")),
 				line: i+1  
 			});
 			continue;
