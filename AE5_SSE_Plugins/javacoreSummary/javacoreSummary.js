@@ -9,7 +9,7 @@ function getJavacoreSummaryOutline(contents) {
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/1TIFILENAME/.exec(line)) { //1TIFILENAME    Javacore filename:    /appvol/WP61/WebSphere_Portal/javacore.20160131.191739.17397.0005.txt
-			var FILENAME=String(line);
+			var FILENAME=line;
 			//window.alert("file name: "+ line);
 			outline.push({
 				label: FILENAME.substr(FILENAME.indexOf("javacore.")),
@@ -20,8 +20,8 @@ function getJavacoreSummaryOutline(contents) {
 				line: i+1  
 			});	
 			break;
-		}
-	}
+		};
+	};
 	return outline;
 }
 
@@ -34,12 +34,12 @@ function getJavacoreSummaryText(text){
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/1TIFILENAME/.exec(line)) { //1TIFILENAME    Javacore filename:    /appvol/WP61/WebSphere_Portal/javacore.20160131.191739.17397.0005.txt
-			var FILENAME=String(line);
+			var FILENAME=line;
 			summary+=("\n"+	FILENAME.substr(FILENAME.indexOf("javacore.")));	
 			summary+=("\n================================");	
 			break;
-		}
-	}
+		};
+	};
 	return summary;
 }
 
