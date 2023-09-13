@@ -11,7 +11,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1TIFILENAME/.exec(line)) {//1TIFILENAME    Javacore filename:    /appvol/WP61/WebSphere_Portal/javacore.20160131.191739.17397.0005.txt
-                //window.alert("file name: "+ line);
+				//window.alert("file name: "+ line);
 				outline.push({
 					label: line.substr(line.indexOf("javacore.")),
 					line: i+1  
@@ -23,7 +23,6 @@ function getJavacoreSummaryOutline(contents) {
 				break;					
 			}
 		}
-		
 		//get server name
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
@@ -38,7 +37,7 @@ function getJavacoreSummaryOutline(contents) {
 				});	  
 				break;
 			}
-		}	
+		}
 		//get signal reason
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];	
@@ -50,7 +49,7 @@ function getJavacoreSummaryOutline(contents) {
 				});
 				break;
 			}
-		}	
+		}
 		//get java version
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
@@ -63,7 +62,6 @@ function getJavacoreSummaryOutline(contents) {
 				break;
 			}
 		}
-		
 		//get OS version
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];	
@@ -75,7 +73,7 @@ function getJavacoreSummaryOutline(contents) {
 				});
 				break;	    				
 			}
-		}	
+		}
 		//get #CPU
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];	
@@ -157,60 +155,66 @@ function getJavacoreSummaryOutline(contents) {
 			line = lines[i];
 	
 			if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
+				var CPUINFO=String(line)
 				outline.push({
 					label: "~",
 					line: i+1  
 				});
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf("Entitled")),
+					label: CPUINFO.substr(CPUINFO.indexOf("Entitled")),
 					line: i+1  
 				});
 				continue;
 			}				
 			if (/2CIPHYSCPU/.exec(line)||/2CIONLNCPU/.exec(line)||/2CIBOUNDCPU/.exec(line)||/2CIENTITLECPU/.exec(line)||/2CITARGETCPU/.exec(line)) {//2CIPHYSCPU     Physical CPUs: 6
+				var PHYSCPU=String(line)
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf("CPU  ")),
+					label: PHYSCPU.substr(PHYSCPU.indexOf("CPU  ")),
 					line: i+1  
 				});
 				continue;
 			}
 			if (/1CIUSERLIMITS/.exec(line)) {//1CIUSERLIMITS  User Limits (in bytes except for NOFILE and NPROC)
+				var USERLIMITS=String(line)
  				outline.push({
 					label: " ",
 					line: i+1  
 				});
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf("User Limits")),
+					label: USERLIMITS.substr(USERLIMITS.indexOf("User Limits")),
 					line: i+1  
 				});
 				continue;
 			}
 			if (/soft limit/.exec(line)) {//NULL           type                            soft limit           hard limit
+				var LIMITS=String(line)
 				outline.push({
 					label: "--------------------------------------------------",
 					line: i+1  
 				});
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf("type")),
+					label: LIMITS.substr(LIMITS.indexOf("type")),
 					line: i+1  
 				});
 				continue;
 			}
 			if (/2CIUSERLIMIT/.exec(line)) {//2CIUSERLIMIT   RLIMIT_AS                      18077286400            unlimited
-			    var rlimit = String(line.substr(line.indexOf(" RLIMIT")+1));
-			    outline.push({
-					label: rlimit,
+				var RLIMIT=String(line)
+				RLIMIT=RLIMIT.substr(line.indexOf(" RLIMIT")+1));
+				outline.push({
+					label: RLIMIT,
 					line: i+1  
 				});
 				continue;
 			}
 			if (/NATIVEMEMINFO/.exec(line)) {//0SECTION       NATIVEMEMINFO subcomponent dump routine
+				var NATIVEMEMINFO=String(line)
 				outline.push({
 					label: " ",
 					line: i+1  
 				});
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf(" NATIVEMEMINFO")+1),
+					label: NATIVEMEMINFO.substr(NATIVEMEMINFO.indexOf(" NATIVEMEMINFO")+1),
 					line: i+1  
 					//TO DO: call NATIVEMEMINFO script
 				});
