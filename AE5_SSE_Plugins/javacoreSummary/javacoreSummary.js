@@ -167,6 +167,20 @@ function getJavacoreSummaryOutline(contents) {
 				label: exitThread.substr(exitThread.indexOf(" ")),
 				line: i+1
 			});
+			for (j=i; j < lines.length; j++) {
+				 line = lines[j];
+				 exitThread=lines[j];
+				 currentThread= String(exitThread).replace(/\s\s+/g, ' ');//remove extra spaces
+				if (/STACKTRACE /.exec(line)){
+					outline.push({
+						label: exitThread.substr(exitThread.indexOf(" ")),
+						line: j+1  
+					});
+				};
+				if (/^NULL/.exec(line)){
+					break;
+				};
+			};
 			break;
 		};
 	};
@@ -192,7 +206,6 @@ function getJavacoreSummaryOutline(contents) {
 				 label: currentThread.substr(currentThread.indexOf(" ")),
 				 line: i+1
 			 });
-			 //break;
 			 for (j=i+2; j < lines.length; j++) {
 				 line = lines[j];
 				 currentThread=lines[j];
