@@ -207,6 +207,7 @@ function getJavacoreSummaryOutline(contents) {
 					break;
 				};
 			};
+			 break;
 		 };
 	 };
 
