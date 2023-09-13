@@ -153,7 +153,9 @@ function getJavacoreSummaryOutline(contents) {
 	        //EXIT
 	        for (i=0; i < lines.length; i++) {
 			line = lines[i];
-			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
+			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)	
+				var exitThread=line
+				exitThread = String(exitThread).replace(/\s\s+/g, ' ');//remove extra spaces
 				outline.push({
 					label: " ",
 					line: i+1  
@@ -166,26 +168,33 @@ function getJavacoreSummaryOutline(contents) {
 					label: "------------------------",
 					line: i+1  
 				});
-				for (j=i; j < lines.length; j++) {
-					line = lines[j];
-					var exitThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)){
-						outline.push({
-							label: exitThread.substr(exitThread.indexOf(" ")),
-							line: j+1  
-						});
-					}
-					if (/^NULL/.exec(line)){
-						break;
-					}
-				}
-				break;
+				outline.push({
+					label: exitThread.substr(exitThread.indexOf(" ")),
+					line: i+1
+				});
+				break;	
+//			for (j=i; j < lines.length; j++) {
+//				line = lines[j];
+//				if (/STACKTRACE /.exec(line)){
+//					outline.push({
+//						label: exitThread.substr(exitThread.indexOf(" ")),
+//						line: j+1  
+//					});
+//				}
+//				if (/^NULL/.exec(line)){
+//					break;
+//				}
+//			}
+//			break;				
+
 			}
 		}
 	        //CURRENT THREAD
 	        for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
+				var currentThread=lines[i+1];
+				currentThread= String(currentThread).replace(/\s\s+/g, ' ');//remove extra spaces
 				outline.push({
 					label: " ",
 					line: i+1  
@@ -198,20 +207,26 @@ function getJavacoreSummaryOutline(contents) {
 					label: "------------------------",
 					line: i+1  
 				});
-				for (j=i; j < lines.length; j++) {
-					line = lines[j];
-					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)){
-						outline.push({
-							label: currentThread.substr(currentThread.indexOf(" ")),
-							line: j+1  
-						});
-					}
-					if (/^NULL/.exec(line)){
-						break;
-					}
-				}
+				outline.push({
+					label: currentThread.substr(currentThread.indexOf(" ")),
+					line: i+1  
+				});
 				break;
+//			for (j=i+2; j < lines.length; j++) {
+//				line = lines[j];
+//				currentThread=lines[j];
+//				currentThread= String(currentThread).replace(/\s\s+/g, ' ');//remove extra spaces
+//				if (/STACKTRACE /.exec(line)){
+//					outline.push({
+//						label: currentThread.substr(currentThread.indexOf(" ")),
+//						line: j+1  
+//					});
+//				}
+//				if (/^NULL/.exec(line)){
+//					break;
+//				}
+//			}
+//			break;
 			}
 		}
 		
