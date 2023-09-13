@@ -150,6 +150,7 @@ function getJavacoreSummaryOutline(contents) {
 				break;
 			}
 		}
+	        //EXIT
 	        for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
@@ -174,7 +175,7 @@ function getJavacoreSummaryOutline(contents) {
 							line: j+1  
 						});
 					}
-					if (/^NULL /.exec(line)){
+					if (/^NULL/.exec(line)){
 						break;
 					}
 				}
@@ -325,14 +326,14 @@ function getJavacoreSummaryOutline(contents) {
 				});
 				for (j=i; j < lines.length; j++) {
 					line = lines[j];
-					var currentThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+					var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
 					if (/STACKTRACE /.exec(line)){
 						outline.push({
 							label: currentThread.substr(currentThread.indexOf(" ")),
-							line: i+1  
+							line: j+1  
 						});
 					}
-					if (/^NULL /.exec(line)){
+					if (/^NULL/.exec(line)){
 						break;
 					}
 				}
@@ -472,7 +473,7 @@ function getJavacoreSummaryText(text){
 					if (/STACKTRACE /.exec(line)){
 						summary+="\n"+exitStackThread.substr(exitStackThread.indexOf(" ")) ;						
 					}
-					if (/^NULL /.exec(line){
+					if (/^NULL/.exec(line){
 						break;
 					}
 				}
@@ -557,7 +558,7 @@ function getJavacoreSummaryText(text){
 					if (/STACKTRACE /.exec(line)){
 						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;	
 					}
-					if (/^NULL /.exec(line){
+					if (/^NULL/.exec(line){
 						break;
 					}
 				}
