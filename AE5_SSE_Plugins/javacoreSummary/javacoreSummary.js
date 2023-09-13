@@ -11,7 +11,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1TIFILENAME/.exec(line)) {//1TIFILENAME    Javacore filename:    /appvol/WP61/WebSphere_Portal/javacore.20160131.191739.17397.0005.txt
-				var FILENAME=String(line)
+				var FILENAME=String(line);
 				//window.alert("file name: "+ line);
 				outline.push({
 					label: FILENAME.substr(FILENAME.indexOf("javacore.")),
@@ -31,7 +31,7 @@ function getJavacoreSummaryOutline(contents) {
 				//   /config   /config
 				//1CICMDLINE     /opt/WebSphere/AppServer/java_1.7_64/bin/java -Declipse.security -Dwas.status.socket=59742 -Dosgi.install.area=/opt/WebSphere/AppServer -Dosgi.configuration.area=/opt/WebSphere/wp_profile/servers/WebSphere_Portal/configuration -Djava.awt.headless=true -Dosgi.framework.extensions=com.ibm.cds,com.ibm.ws.eclipse.adaptors -Xshareclasses:name=webspherev85_1.7_64_%g,nonFatal -Dcom.ibm.xtq.processor.overrideSecureProcessing=true -Xcheck:dump -Xbootclasspath/p:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/ibmorb.jar -classpath /opt/WebSphere/wp_profile/properties:/opt/WebSphere/AppServer/properties:/opt/WebSphere/AppServer/lib/startup.jar:/opt/WebSphere/AppServer/lib/bootstrap.jar:/opt/WebSphere/AppServer/lib/jsf-nls.jar:/opt/WebSphere/AppServer/lib/lmproxy.jar:/opt/WebSphere/AppServer/lib/urlprotocols.jar:/opt/WebSphere/AppServer/deploytool/itp/batchboot.jar:/opt/WebSphere/AppServer/deploytool/itp/batch2.jar:/opt/WebSphere/AppServer/java_1.7_64/lib/tools.jar:/opt/WebSphere/PortalServer/base/wp.script/lib/wp.wire.jar -Dorg.osgi.framework.bootdelegation=* -Dibm.websphere.internalClassAccessMode=allow -verbose:gc -Xms2048m -Xmx5120m -Xcompressedrefs -Xscmaxaot4M -Xscmx90M -Dws.ext.dirs=/opt/WebSphere/AppServer/java_1.7_64/lib:/opt/WebSphere/wp_profile/classes:/opt/WebSphere/AppServer/classes:/opt/WebSphere/AppServer/lib:/opt/WebSphere/AppServer/installedChannels:/opt/WebSphere/AppServer/lib/ext:/opt/WebSphere/AppServer/web/help:/opt/WebSphere/AppServer/deploytool/itp/plugins/com.ibm.etools.ejbdeploy/runtime:/opt/WebSphere/PortalServer/shared/ext -Xdump:stack:events=allocation,filter=#10m -Dcom.ibm.itp.location=/opt/WebSphere/AppServer/bin -Djava.util.logging.configureByServer=true -Duser.install.root=/opt/WebSphere/wp_profile -Djava.ext.dirs=/opt/WebSphere/AppServer/tivoli/tam:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/ext -Djavax.management.builder.initial=com.ibm.ws.management.PlatformMBeanServerBuilder -Dpython.cachedir=/opt/WebSphere/wp_profile/temp/cachedir -Dwas.install.root=/opt/WebSphere/AppServer -Djava.util.logging.manager=com.ibm.ws.bootstrap.WsLogManager -Dserver.root=/opt/WebSphere/wp_profile -Dcom.ibm.security.jgss.debug=off -Dcom.ibm.security.krb5.Krb5Debug=off -Dcom.ibm.websphere.logging.messageId.version=6 -Dportal.temp.dir=/opt/WebSphere/wp_profile/temp/BSLWSPORTAL1Node/WebSphere_Portal -Dportal.properties.dir=/opt/WebSphere/wp_profile/PortalServer/config -Dcom.ibm.websphere.management.application.client.jspReloadEnabled=false -Dcom.ibm.zipfile.closeinputstreams=true -Dos400.class.path.rawt=2 -Dpzn.root.dir=/opt/WebSphere/AppServer/pzn/config/runtime -Dcom.ibm.ws.cache.CacheConfig.useServerClassLoader=true -Dcom.ibm.ws.cache.CacheConfig.filterLRUInvalidation=true -Dcom.ibm.ws.cache.CacheConfig.filterTimeOutInvalidation=true -Dcom.ibm.ws.cache.CacheConfig.cacheEntryWindow=2 -Dcom.ibm.ws.cache.CacheConfig.cacheInvalidateEntryWindow=2 -Dcom.ibm.websphere.alarmthreadmonitor.threshold.millis=300000 -ea -Dderby.system.home=/opt/WebSphere/wp_profile/PortalServer/derby -Dibm.stream.nio=true -Djava.io.tmpdir=/opt/WebSphere/wp_profile/temp -Xgcpolicy:gencon -verbose:gc -Xverbosegclog:/opt/WebSphere/wp_profile/logs/WebSphere_Portal/verbosegc.%Y%m%d.%H%M%S.%pid.txt,20,10000 -javaagent:/opt/WebSphere/AppServerAgent/javaagent.jar -Djava.library.path=/opt/WebSphere/AppServer/lib/native/linux/x86_64/:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/amd64/compressedrefs:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/amd64:/opt/WebSphere/AppServer/bin:/opt/WebSphere/AppServer/nulldllsdir:/usr/lib:/opt/WebSphere/PortalServer/lwo/prereq.odc/shared/app/oiexport: -Djava.endorsed.dirs=/opt/WebSphere/AppServer/endorsed_apis:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/endorsed -Djava.security.auth.login.config=/opt/WebSphere/wp_profile/properties/wsjaas.conf -Djava.security.policy=/opt/WebSphere/wp_profile/properties/server.policy com.ibm.wsspi.bootstrap.WSPreLauncher -nosplash -application com.ibm.ws.bootstrap.WSLauncher com.ibm.ws.runtime.WsServer /opt/WebSphere/wp_profile/config BSLWSDMGRCell01 BSLWSPORTAL1Node WebSphere_Portal
 				//MDLINE     /usr/WebSphere/AppServer/java/bin/java -Declipse.security -Dwas.status.socket=55804 -Dosgi.install.area=/usr/WebSphere/AppServer -Dosgi.configuration.area=/usr/WebSphere/AppServer/profiles/default/configuration -Dosgi.framework.extensions=com.ibm.cds -Xshareclasses:name=webspherev61_%g,groupAccess,nonFatal -Xscmx50M -Dcom.ibm.xtq.processor.overrideSecureProcessing=true -Xbootclasspath/p:/usr/WebSphere/AppServer/java/jre/lib/ext/ibmorb.jar:/usr/WebSphere/AppServer/java/jre/lib/ext/ibmext.jar -classpath /usr/WebSphere/AppServer/profiles/default/properties:/usr/WebSphere/AppServer/properties:/usr/WebSphere/AppServer/lib/startup.jar:/usr/WebSphere/AppServer/lib/bootstrap.jar:/usr/WebSphere/AppServer/lib/j2ee.jar:/usr/WebSphere/AppServer/lib/lmproxy.jar:/usr/WebSphere/AppServer/lib/urlprotocols.jar:/usr/WebSphere/AppServer/deploytool/itp/batchboot.jar:/usr/WebSphere/AppServer/deploytool/itp/batch2.jar:/usr/WebSphere/AppServer/java/lib/tools.jar:/was/etc -Dibm.websphere.internalClassAccessMode=allow -verbose:gc -Xms256m -Xmx512m -Dws.ext.dirs=/usr/WebSphere/AppServer/java/lib:/usr/WebSphere/AppServer/profiles/default/classes:/usr/WebSphere/AppServer/classes:/usr/WebSphere/AppServer/lib:/usr/WebSphere/AppServer/installedChannels:/usr/WebSphere/AppServer/lib/ext:/usr/WebSphere/AppServer/web/help:/usr/WebSphere/AppServer/deploytool/itp/plugins/com.ibm.etools.ejbdeploy/runtime -Dderby.system.home=/usr/WebSphere/AppServer/derby -Dcom.ibm.itp.location=/usr/WebSphere/AppServer/bin -Djava.util.logging.configureByServer=true -Duser.install.root=/usr/WebSphere/AppServer/profiles/default -Djavax.management.builder.initial=com.ibm.ws.management.PlatformMBeanServerBuilder -Dwas.install.root=/usr/WebSphere/AppServer -Dpython.cachedir=/usr/WebSphere/AppServer/profiles/default/temp/cachedir -Djava.util.logging.manager=com.ibm.ws.bootstrap.WsLogManager -Dserver.root=/usr/WebSphere/AppServer/profiles/default -Djava.awt.headless=false -Dframework.ComponentFactory.impl=jp.co.nikkobeans.framework.servlet.WebComponentFactory -Dlog4j.configuration=/was/etc/log4j.properties -Dfile.encoding=Cp943C -Dclient.encoding.override=Shift_JIS -Xss819200 -Xmso819200 -Djava.security.auth.login.config=/usr/WebSphere/AppServer/profiles/default/properties/wsjaas.conf -Djava.security.policy=/usr/WebSphere/AppServer/profiles/default/properties/server.policy com.ibm.wsspi.bootstrap.WSPreLauncher -nosplash -application com.ibm.ws.bootstrap.WSLauncher com.ibm.ws.runtime.WsServer /usr/WebSphere/AppServer/profiles/default/config mxtwas07 mxtwas07 server1
-				var CMDLINE=String(line)
+				var CMDLINE=String(line);
 				var serverName = CMDLINE.split("config ").pop();
 				outline.push({
 					label: "server name: "+ serverName,
@@ -56,7 +56,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1CIJAVAVERSION/.exec(line)) {//1CIJAVAVERSION JRE 1.6.0 Linux amd64-64 build jvmxa6460sr12-20121024_126067 (pxa6460sr12-20121025_01(SR12))
-				var JAVAVERSION=String(line)
+				var JAVAVERSION=String(line);
 				JAVAVERSION= String(JAVAVERSION).replace(/\s\s+/g, ' ');//consolidate spaces
 				outline.push({
 					label: JAVAVERSION.substr(JAVAVERSION.indexOf(" ")),
@@ -69,7 +69,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];	
 			if (/2XHOSLEVEL/.exec(line)) {//2XHOSLEVEL     OS Level         : Linux 3.0.38-0.5-default
-				var OSLEVEL=String(line)
+				var OSLEVEL=String(line);
 				outline.push({
 					label: OSLEVEL.substr(OSLEVEL.indexOf(": ")+2),
 					line: i+1  
@@ -81,7 +81,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];	
 			if (/3XHNUMCPUS/.exec(line)) {//3XHNUMCPUS       How Many       : 8
-				var NUMCPUS=String(line)
+				var NUMCPUS=String(line);
 				outline.push({
 					label: "CPUs: "+NUMCPUS.substr(NUMCPUS.indexOf(": ")+2),
 					line: i+1  
@@ -106,7 +106,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xmx)/.exec(line)) {//2CIUSERARG               -Xmx2048m
-				var XMX=String(line)
+				var XMX=String(line);
 				outline.push({
 					label: XMX.substr(XMX.indexOf("-X")),
 					line: i+1  
@@ -119,7 +119,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xnoclassgc)/.exec(line)) {//2CIUSERARG               -Xnoclassgc
-				var NOCLASSGC=String(line)
+				var NOCLASSGC=String(line);
 				outline.push({
 					label: NOCLASSGC.substr(NOCLASSGC.indexOf("-X")),
 					line: i+1  
@@ -132,7 +132,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xdisableexplicitgc)/.exec(line)) {//2CIUSERARG               -Xdisableexplicitgc
-				var EXPLICITGC=String(line)
+				var EXPLICITGC=String(line);
 				outline.push({
 					label: EXPLICITGC.substr(EXPLICITGC.indexOf("-X")),
 					line: i+1  
@@ -144,7 +144,7 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xdump)/.exec(line)) {//2CIUSERARG               -Xdump...
-				var XDUMP=String(line)
+				var XDUMP=String(line);
 				outline.push({
 					label: XDUMP.substr(XDUMP.indexOf("-X")),
 					line: i+1  
@@ -159,7 +159,7 @@ function getJavacoreSummaryOutline(contents) {
 			line = lines[i];
 	
 			if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
-				var CPUINFO=String(line)
+				var CPUINFO=String(line);
 				outline.push({
 					label: "~",
 					line: i+1  
@@ -171,7 +171,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}				
 			if (/2CIPHYSCPU/.exec(line)||/2CIONLNCPU/.exec(line)||/2CIBOUNDCPU/.exec(line)||/2CIENTITLECPU/.exec(line)||/2CITARGETCPU/.exec(line)) {//2CIPHYSCPU     Physical CPUs: 6
-				var PHYSCPU=String(line)
+				var PHYSCPU=String(line);
 				outline.push({
 					label: PHYSCPU.substr(PHYSCPU.indexOf("CPU  ")),
 					line: i+1  
@@ -179,7 +179,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/1CIUSERLIMITS/.exec(line)) {//1CIUSERLIMITS  User Limits (in bytes except for NOFILE and NPROC)
-				var USERLIMITS=String(line)
+				var USERLIMITS=String(line);
  				outline.push({
 					label: " ",
 					line: i+1  
@@ -191,7 +191,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/soft limit/.exec(line)) {//NULL           type                            soft limit           hard limit
-				var LIMITS=String(line)
+				var LIMITS=String(line);
 				outline.push({
 					label: "--------------------------------------------------",
 					line: i+1  
@@ -203,7 +203,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/2CIUSERLIMIT/.exec(line)) {//2CIUSERLIMIT   RLIMIT_AS                      18077286400            unlimited
-				var RLIMIT=String(line)
+				var RLIMIT=String(line);
 				RLIMIT=RLIMIT.substr(line.indexOf(" RLIMIT")+1));
 				outline.push({
 					label: RLIMIT,
@@ -212,7 +212,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/NATIVEMEMINFO/.exec(line)) {//0SECTION       NATIVEMEMINFO subcomponent dump routine
-				var NATIVEMEMINFO=String(line)
+				var NATIVEMEMINFO=String(line);
 				outline.push({
 					label: " ",
 					line: i+1  
@@ -243,7 +243,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/1STHEAPTYPE/.exec(line)||/1STSEGTYPE/.exec(line)) {//1STHEAPTYPE    Object Memory ... 1STHEAPTYPE Object Memory
-				var memoryType = String(line)
+				var memoryType = String(line);
 				memoryType = memoryType.replace(/\s\s+/g, ' ');//remove multiple spaces
 				memoryType = memoryType.substr(memoryType.indexOf(" ")+1);//1STHEAPTYPE Object Memory ... Object Memory
 				outline.push({
@@ -261,7 +261,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/1STHEAPALLOC/.exec(line)||/1STHEAPTOTAL/.exec(line)||/1STSEGTOTAL/.exec(line)||/1STSEGINUSE/.exec(line)||/1STSEGFREE/.exec(line)||/1STHEAPINUSE/.exec(line)||/1STHEAPFREE/.exec(line)) {				
-				var memory = String(line)
+				var memory = String(line);
 				memory = memory.replace(/\s\s+/g, ' ');//consolidate spaces
 				if (/\(/.exec(memory)){//1STSEGTOTAL    Total memory:                    46759936 (0x0000000002C98000)
 					var reAllNumbersFoundInTheString = /\b\d+\b/g;//regular expression to get all the numbers from a string
@@ -269,7 +269,7 @@ function getJavacoreSummaryOutline(contents) {
 					memory = memory[1]  + " = " + decToMb(reAllNumbersFoundInTheString.exec(lines[i]));//since the memory value is the first number in this string
 				}else{//1STHEAPFREE    Bytes of Heap Space Free: 8cfa600
 					var decValue = hexToDec(memory.substr(memory.indexOf(":")+1).trim());
-					memory = memory.substr(memory.indexOf(" "), memory.indexOf(":")+ 1) + "=" + decToMb(decValue) ;	
+					memory = memory.substr(memory.indexOf(" "), memory.indexOf(":")+ 1) + "=" + decToMb(decValue);	
 					outline.push({
 						label: " ",
 						line: i+1  
@@ -282,7 +282,7 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/2LKPOOLTOTAL/.exec(line)) {//2LKPOOLTOTAL     Current total number of monitors: 2390
-				var POOLTOTAL=String(line)
+				var POOLTOTAL=String(line);
 				outline.push({
 					label: " ",
 					line: i+1  
@@ -309,7 +309,8 @@ function getJavacoreSummaryText(text){
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1TIFILENAME/.exec(line)) {//1TIFILENAME    Javacore filename:    /appvol/WP61/WebSphere_Portal/javacore.20160131.191739.17397.0005.txt
-                summary+=("\n"+	line.substr(line.indexOf("javacore.")));	
+				var FILENAME=String(line);
+				summary+=("\n"+	FILENAME.substr(FILENAME.indexOf("javacore.")));	
 				summary+=("\n================================");	
 				break;					
 			}
@@ -318,7 +319,8 @@ function getJavacoreSummaryText(text){
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1CICMDLINE /.exec(line)) {//1CICMDLINE     /opt/WebSphere/AppServer/java_1.7_64/bin/java -Declipse.security -Dwas.status.socket=59742 -Dosgi.install.area=/opt/WebSphere/AppServer -Dosgi.configuration.area=/opt/WebSphere/wp_profile/servers/WebSphere_Portal/configuration -Djava.awt.headless=true -Dosgi.framework.extensions=com.ibm.cds,com.ibm.ws.eclipse.adaptors -Xshareclasses:name=webspherev85_1.7_64_%g,nonFatal -Dcom.ibm.xtq.processor.overrideSecureProcessing=true -Xcheck:dump -Xbootclasspath/p:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/ibmorb.jar -classpath /opt/WebSphere/wp_profile/properties:/opt/WebSphere/AppServer/properties:/opt/WebSphere/AppServer/lib/startup.jar:/opt/WebSphere/AppServer/lib/bootstrap.jar:/opt/WebSphere/AppServer/lib/jsf-nls.jar:/opt/WebSphere/AppServer/lib/lmproxy.jar:/opt/WebSphere/AppServer/lib/urlprotocols.jar:/opt/WebSphere/AppServer/deploytool/itp/batchboot.jar:/opt/WebSphere/AppServer/deploytool/itp/batch2.jar:/opt/WebSphere/AppServer/java_1.7_64/lib/tools.jar:/opt/WebSphere/PortalServer/base/wp.script/lib/wp.wire.jar -Dorg.osgi.framework.bootdelegation=* -Dibm.websphere.internalClassAccessMode=allow -verbose:gc -Xms2048m -Xmx5120m -Xcompressedrefs -Xscmaxaot4M -Xscmx90M -Dws.ext.dirs=/opt/WebSphere/AppServer/java_1.7_64/lib:/opt/WebSphere/wp_profile/classes:/opt/WebSphere/AppServer/classes:/opt/WebSphere/AppServer/lib:/opt/WebSphere/AppServer/installedChannels:/opt/WebSphere/AppServer/lib/ext:/opt/WebSphere/AppServer/web/help:/opt/WebSphere/AppServer/deploytool/itp/plugins/com.ibm.etools.ejbdeploy/runtime:/opt/WebSphere/PortalServer/shared/ext -Xdump:stack:events=allocation,filter=#10m -Dcom.ibm.itp.location=/opt/WebSphere/AppServer/bin -Djava.util.logging.configureByServer=true -Duser.install.root=/opt/WebSphere/wp_profile -Djava.ext.dirs=/opt/WebSphere/AppServer/tivoli/tam:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/ext -Djavax.management.builder.initial=com.ibm.ws.management.PlatformMBeanServerBuilder -Dpython.cachedir=/opt/WebSphere/wp_profile/temp/cachedir -Dwas.install.root=/opt/WebSphere/AppServer -Djava.util.logging.manager=com.ibm.ws.bootstrap.WsLogManager -Dserver.root=/opt/WebSphere/wp_profile -Dcom.ibm.security.jgss.debug=off -Dcom.ibm.security.krb5.Krb5Debug=off -Dcom.ibm.websphere.logging.messageId.version=6 -Dportal.temp.dir=/opt/WebSphere/wp_profile/temp/BSLWSPORTAL1Node/WebSphere_Portal -Dportal.properties.dir=/opt/WebSphere/wp_profile/PortalServer/config -Dcom.ibm.websphere.management.application.client.jspReloadEnabled=false -Dcom.ibm.zipfile.closeinputstreams=true -Dos400.class.path.rawt=2 -Dpzn.root.dir=/opt/WebSphere/AppServer/pzn/config/runtime -Dcom.ibm.ws.cache.CacheConfig.useServerClassLoader=true -Dcom.ibm.ws.cache.CacheConfig.filterLRUInvalidation=true -Dcom.ibm.ws.cache.CacheConfig.filterTimeOutInvalidation=true -Dcom.ibm.ws.cache.CacheConfig.cacheEntryWindow=2 -Dcom.ibm.ws.cache.CacheConfig.cacheInvalidateEntryWindow=2 -Dcom.ibm.websphere.alarmthreadmonitor.threshold.millis=300000 -ea -Dderby.system.home=/opt/WebSphere/wp_profile/PortalServer/derby -Dibm.stream.nio=true -Djava.io.tmpdir=/opt/WebSphere/wp_profile/temp -Xgcpolicy:gencon -verbose:gc -Xverbosegclog:/opt/WebSphere/wp_profile/logs/WebSphere_Portal/verbosegc.%Y%m%d.%H%M%S.%pid.txt,20,10000 -javaagent:/opt/WebSphere/AppServerAgent/javaagent.jar -Djava.library.path=/opt/WebSphere/AppServer/lib/native/linux/x86_64/:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/amd64/compressedrefs:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/amd64:/opt/WebSphere/AppServer/bin:/opt/WebSphere/AppServer/nulldllsdir:/usr/lib:/opt/WebSphere/PortalServer/lwo/prereq.odc/shared/app/oiexport: -Djava.endorsed.dirs=/opt/WebSphere/AppServer/endorsed_apis:/opt/WebSphere/AppServer/java_1.7_64/jre/lib/endorsed -Djava.security.auth.login.config=/opt/WebSphere/wp_profile/properties/wsjaas.conf -Djava.security.policy=/opt/WebSphere/wp_profile/properties/server.policy com.ibm.wsspi.bootstrap.WSPreLauncher -nosplash -application com.ibm.ws.bootstrap.WSLauncher com.ibm.ws.runtime.WsServer /opt/WebSphere/wp_profile/config BSLWSDMGRCell01 BSLWSPORTAL1Node WebSphere_Portal
-				var serverName = line.split("config ").pop();
+				var serverName = String(line);
+				serverName=serverName.split("config ").pop();
 				summary+=("\n"+"server name: "+ serverName);	  
 				break;
 			}
