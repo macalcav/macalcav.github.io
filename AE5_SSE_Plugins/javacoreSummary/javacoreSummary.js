@@ -192,7 +192,21 @@ function getJavacoreSummaryOutline(contents) {
 				 label: currentThread.substr(currentThread.indexOf(" ")),
 				 line: i+1
 			 });
-			 break;
+			 //break;
+			 for (j=i+2; j < lines.length; j++) {
+				 line = lines[j];
+				 currentThread=lines[j];
+				 currentThread= String(currentThread).replace(/\s\s+/g, ' ');//remove extra spaces
+				if (/STACKTRACE /.exec(line)){
+					outline.push({
+						label: currentThread.substr(currentThread.indexOf(" ")),
+						line: j+1  
+					});
+				};
+				if (/^NULL/.exec(line)){
+					break;
+				};
+			};
 		 };
 	 };
 
