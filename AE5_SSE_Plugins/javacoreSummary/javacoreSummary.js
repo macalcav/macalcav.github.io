@@ -22,7 +22,27 @@ function getJavacoreSummaryOutline(contents) {
 			break;
 		}
 	}
+	return outline;
 }
+
+function getJavacoreSummaryText(text){
+	var summary = [];
+	var lines = text.split(/\r?\n/);
+	var line;
+	var i;
+	//get javacore file name first
+	for (i=0; i < lines.length; i++) {
+		line = lines[i];
+		if (/1TIFILENAME/.exec(line)) { //1TIFILENAME    Javacore filename:    /appvol/WP61/WebSphere_Portal/javacore.20160131.191739.17397.0005.txt
+			var FILENAME=String(line);
+			summary+=("\n"+	FILENAME.substr(FILENAME.indexOf("javacore.")));	
+			summary+=("\n================================");	
+			break;
+		}
+	}
+	return summary;
+}
+
 
 function decToMb(dec){
 	dec = parseFloat(dec);
