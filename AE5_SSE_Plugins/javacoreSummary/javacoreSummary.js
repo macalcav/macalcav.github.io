@@ -170,7 +170,7 @@ function getJavacoreSummaryOutline(contents) {
 			for (j=i; j < lines.length; j++) {
 				 line = lines[j];
 				 exitThread=lines[j];
-				 currentThread= String(exitThread).replace(/\s\s+/g, ' ');//remove extra spaces
+				 exitThread= String(exitThread).replace(/\s\s+/g, ' ');//remove extra spaces
 				if (/STACKTRACE /.exec(line)){
 					outline.push({
 						label: exitThread.substr(exitThread.indexOf(" ")),
@@ -223,6 +223,159 @@ function getJavacoreSummaryOutline(contents) {
 			 break;
 		 };
 	 };
+	//////////////////////////
+	///start contents loop
+	for (i=0; i < lines.length; i++) {
+		line = lines[i];
+
+		//CPUINFO
+		if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
+			var CPUINFO=line;
+			outline.push({
+				label: "~",
+				line: i+1  
+			});
+			outline.push({
+				label: lines[i].substr(lines[i].indexOf("Entitled")),
+				line: i+1  
+			});
+			continue;
+		};
+		//PHYSCPU
+		if (/2CIPHYSCPU/.exec(line)||/2CIONLNCPU/.exec(line)||/2CIBOUNDCPU/.exec(line)||/2CIENTITLECPU/.exec(line)||/2CITARGETCPU/.exec(line)) {//2CIPHYSCPU     Physical CPUs: 6
+			var PHYSCPU=line;
+			outline.push({
+				label: PHYSCPU.substr(PHYSCPU.indexOf("CPU  ")),
+				line: i+1  
+			});
+			continue;
+		};
+		//USERLIMITS
+		if (/1CIUSERLIMITS/.exec(line)) {//1CIUSERLIMITS  User Limits (in bytes except for NOFILE and NPROC)
+			var USERLIMITS=line;
+ 			outline.push({
+				label: " ",
+				line: i+1  
+			});
+			outline.push({
+				label: USERLIMITS.substr(USERLIMITS.indexOf("User Limits")),
+				line: i+1  
+			});
+			continue;
+		};
+		//LIMITS
+		if (/soft limit/.exec(line)) {//NULL           type                            soft limit           hard limit
+			var LIMITS=line;
+			outline.push({
+				label: "--------------------------------------------------",
+				line: i+1  
+			});
+			outline.push({
+				label: LIMITS.substr(LIMITS.indexOf("type")),
+				line: i+1  
+			});
+			continue;
+		};
+		//RLIMIT
+		if (/2CIUSERLIMIT/.exec(line)) {//2CIUSERLIMIT   RLIMIT_AS                      18077286400            unlimited
+			var RLIMIT=line;
+			RLIMIT = String(line.substr(RLIMIT.indexOf(" RLIMIT")+1));
+			outline.push({
+				label: RLIMIT,
+				line: i+1  
+			});
+			continue;
+		};
+		//NATIVEMEMINFO
+		if (/NATIVEMEMINFO/.exec(line)) {//0SECTION       NATIVEMEMINFO subcomponent dump routine
+			var NATIVEMEMINFO=line;
+			outline.push({
+				label: " ",
+				line: i+1  
+			});
+			outline.push({
+				label: NATIVEMEMINFO.substr(NATIVEMEMINFO.indexOf(" NATIVEMEMINFO")+1),
+				line: i+1  
+				//TO DO: call NATIVEMEMINFO script
+			});
+			outline.push({
+				label: "-------------------------------------- ",
+				line: i+1  
+			});
+			continue;
+		};
+		//MEMUSER
+		if (/(MEMUSER\s{7}).+?(allocation)/.exec(line)){//5MEMUSER       |  |  |  +--Direct Byte Buffers: 29,753,776 bytes / 2462 allocations
+			var MEMUSER=line;
+			MEMUSER=MEMUSER.replace(/\s\s+/g, ' ');//consolidate spaces 
+			var indexOfFirstSpace = MEMUSER.indexOf(" ");
+			var indexOfColon = MEMUSER.indexOf(":");
+			var indexOfBytes = MEMUSER.indexOf(" bytes");
+			var byteValue=MEMUSER.substring(indexOfColon+2,indexOfBytes);//grab the byte value consider space after colon
+			byteValue=byteValue.replace(/\,/g,'');//remove commas
+			outline.push({
+				label: MEMUSER.substring(indexOfFirstSpace, indexOfBytes)+"="+(byteValue/1024/1024).toFixed(2) + "mb",
+				line: i+1  
+			});
+			continue;
+		};
+		//MEMORYTYPE
+		if (/1STHEAPTYPE/.exec(line)||/1STSEGTYPE/.exec(line)) {//1STHEAPTYPE    Object Memory ... 1STHEAPTYPE Object Memory
+			var MEMORYTYPE = line;
+			MEMORYTYPE = MEMORYTYPE.replace(/\s\s+/g, ' ');//remove multiple spaces
+			MEMORYTYPE = MEMORYTYPE.substr(MEMORYTYPE.indexOf(" ")+1);//1STHEAPTYPE Object Memory ... Object Memory
+			outline.push({
+				label: " ",
+				line: i+1  
+			});
+			outline.push({
+				label: MEMORYTYPE,
+				line: i+1  
+			});
+			outline.push({
+				label: "-------------",
+				line: i+1  
+			});
+			continue;
+		};
+		//MEMORY
+		if (/1STHEAPALLOC/.exec(line)||/1STHEAPTOTAL/.exec(line)||/1STSEGTOTAL/.exec(line)||/1STSEGINUSE/.exec(line)||/1STSEGFREE/.exec(line)||/1STHEAPINUSE/.exec(line)||/1STHEAPFREE/.exec(line)) {
+			var MEMORY = line;
+			MEMORY = MEMORY.replace(/\s\s+/g, ' ');//consolidate spaces
+			if (/\(/.exec(MEMORY)){ //1STSEGTOTAL    Total memory:                    46759936 (0x0000000002C98000)
+				var reAllNumbersFoundInTheString = /\b\d+\b/g;//regular expression to get all the numbers from a string
+				MEMORY = / (.*?)( \()/.exec(memory);//everything between the first space and the first parenthesis
+				MEMORY = MEMORY[1]  + " = " + decToMb(reAllNumbersFoundInTheString.exec(lines[i]));//since the memory value is the first number in this string
+			}else{//1STHEAPFREE    Bytes of Heap Space Free: 8cfa600
+				var decValue = hexToDec(MEMORY.substr(MEMORY.indexOf(":")+1).trim());
+				MEMORY = MEMORY.substr(MEMORY.indexOf(" "), MEMORY.indexOf(":")+ 1) + "=" + decToMb(decValue);	
+				outline.push({
+					label: " ",
+					line: i+1
+				});
+			};
+			outline.push({
+				label: MEMORY,
+				line: i+1  
+			});
+			continue;
+		};
+		//POOLTOTAL
+		if (/2LKPOOLTOTAL/.exec(line)) {//2LKPOOLTOTAL     Current total number of monitors: 2390
+			var POOLTOTAL=line;
+			outline.push({
+				label: " ",
+				line: i+1  
+			});
+			outline.push({
+				label: POOLTOTAL.substr(POOLTOTAL.indexOf("Current")),
+				line: i+1  
+			});
+			continue;
+		};
+
+	};//end of contents loop
+/////////////////////////
 
 	return outline;
 }
