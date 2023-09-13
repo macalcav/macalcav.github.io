@@ -150,6 +150,34 @@ function getJavacoreSummaryOutline(contents) {
 				break;
 			}
 		}
+	        for (i=0; i < lines.length; i++) {
+			line = lines[i];
+			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
+				outline.push({
+					label: " ",
+					line: i+1  
+				});
+				outline.push({
+					label: "EXIT",
+					line: i+1  
+				});
+				outline.push({
+					label: "------------------------",
+					line: i+1  
+				});
+				while (/^NULL /.exec(line)==null){//get stack trace of Exit thread
+					var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+					if (/STACKTRACE /.exec(line)){
+						outline.push({
+							label: exitThread.substr(exitThread.indexOf(" ")),
+							line: i+1  
+						});
+					}
+					line = lines[i++];
+				}
+				break;
+			}
+		}
 		
 		for (i=0; i < lines.length; i++) {
 			
@@ -303,33 +331,9 @@ function getJavacoreSummaryOutline(contents) {
 					}
 					line = lines[i++];
 				}
-				//continue;
-			}
-			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
-				outline.push({
-					label: " ",
-					line: i+1  
-				});
-				outline.push({
-					label: "EXIT",
-					line: i+1  
-				});
-				outline.push({
-					label: "------------------------",
-					line: i+1  
-				});
-				while (/^NULL /.exec(line)==null){//get stack trace of Exit thread
-					var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)){
-						outline.push({
-							label: exitThread.substr(exitThread.indexOf(" ")),
-							line: i+1  
-						});
-					}
-					line = lines[i++];
-				}
 				continue;
 			}
+
 
 		}//end of contents loop
 		return outline;
@@ -452,6 +456,23 @@ function getJavacoreSummaryText(text){
 				break;
 			}
 		}
+	        //get EXIT
+	        for (i=0; i < lines.length; i++) {
+			line = lines[i];
+			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
+				summary+=("\n\nEXIT\n--------------------");
+				var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+				summary+="\n"+exitThread.substr(exitThread.indexOf(" ")) ;	
+				while (/^NULL /.exec(line)==null){
+					var exitStackThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+					if (/STACKTRACE /.exec(line)){
+						summary+="\n"+exitStackThread.substr(exitStackThread.indexOf(" ")) ;						
+					}
+					line = lines[i++];
+				}
+				break;
+			}
+		}
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
@@ -534,17 +555,7 @@ function getJavacoreSummaryText(text){
 				}
 				continue;
 			}
-			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
-				summary+=("\n\nEXIT\n--------------------");
-				while (/^NULL /.exec(line)==null){
-					var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
-					if (/STACKTRACE /.exec(line)){
-						summary+="\n"+exitThread.substr(exitThread.indexOf(" ")) ;						
-					}
-					line = lines[i++];
-				}
-				continue;
-			}
+
 		}//end of contents loop
 		return summary;
 }	
