@@ -150,8 +150,8 @@ function getJavacoreSummaryOutline(contents) {
 				break;
 			}
 		}
-	        //EXIT
-	        for (i=0; i < lines.length; i++) {
+	  //EXIT
+	  for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)	
 				var exitThread=line
@@ -186,11 +186,10 @@ function getJavacoreSummaryOutline(contents) {
 //				}
 //			}
 //			break;				
-
 			}
 		}
-	        //CURRENT THREAD
-	        for (i=0; i < lines.length; i++) {
+	  //CURRENT THREAD
+	  for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
 				var currentThread=lines[i+1];
@@ -299,20 +298,22 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}	
 			if (/(MEMUSER\s{7}).+?(allocation)/.exec(line)){//5MEMUSER       |  |  |  +--Direct Byte Buffers: 29,753,776 bytes / 2462 allocations
-			    lines[i]=lines[i].replace(/\s\s+/g, ' ');//consolidate spaces 
-			    var indexOfFirstSpace = lines[i].indexOf(" ");
-			    var indexOfColon = lines[i].indexOf(":");
-			    var indexOfBytes = lines[i].indexOf(" bytes");
-			    var byteValue=lines[i].substring(indexOfColon+2,indexOfBytes);//grab the byte value consider space after colon
+			    var MEMUSER=String(line)
+			    MEMUSER=MEMUSER.replace(/\s\s+/g, ' ');//consolidate spaces 
+			    var indexOfFirstSpace = MEMUSER.indexOf(" ");
+			    var indexOfColon = MEMUSER.indexOf(":");
+			    var indexOfBytes = MEMUSER.indexOf(" bytes");
+			    var byteValue=MEMUSER.substring(indexOfColon+2,indexOfBytes);//grab the byte value consider space after colon
 			    byteValue=byteValue.replace(/\,/g,'');//remove commas
 			    outline.push({
-					label: lines[i].substring(indexOfFirstSpace, indexOfBytes)+"="+(byteValue/1024/1024).toFixed(2) + "mb",
-					line: i+1  
-				});
+			      label: MEMUSER.substring(indexOfFirstSpace, indexOfBytes)+"="+(byteValue/1024/1024).toFixed(2) + "mb",
+					  line: i+1  
+				  });
 			    continue;
 			}
 			if (/1STHEAPTYPE/.exec(line)||/1STSEGTYPE/.exec(line)) {//1STHEAPTYPE    Object Memory ... 1STHEAPTYPE Object Memory
-				var memoryType = String(line).replace(/\s\s+/g, ' ');//remove multiple spaces
+			  var memoryType = String(line)
+				memoryType = memoryType.replace(/\s\s+/g, ' ');//remove multiple spaces
 				memoryType = memoryType.substr(memoryType.indexOf(" ")+1);//1STHEAPTYPE Object Memory ... Object Memory
 				outline.push({
 					label: " ",
@@ -329,7 +330,8 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/1STHEAPALLOC/.exec(line)||/1STHEAPTOTAL/.exec(line)||/1STSEGTOTAL/.exec(line)||/1STSEGINUSE/.exec(line)||/1STSEGFREE/.exec(line)||/1STHEAPINUSE/.exec(line)||/1STHEAPFREE/.exec(line)) {				
-				var memory = String(lines[i]).replace(/\s\s+/g, ' ');//consolidate spaces
+				var memory = String(line)
+				memory = memory.replace(/\s\s+/g, ' ');//consolidate spaces
 				if (/\(/.exec(memory)){//1STSEGTOTAL    Total memory:                    46759936 (0x0000000002C98000)
 					var reAllNumbersFoundInTheString = /\b\d+\b/g;//regular expression to get all the numbers from a string
 					memory = / (.*?)( \()/.exec(memory);//everything between the first space and the first parenthesis
