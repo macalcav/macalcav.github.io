@@ -149,8 +149,8 @@ function getJavacoreSummaryOutline(contents) {
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)	
-			var exitThread=line
-			exitThread = String(exitThread).replace(/\s\s+/g, ' ');//remove extra spaces
+			var EXITTHREAD=line;
+			exitThread = String(EXITTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
 			outline.push({
 				label: " ",
 				line: i+1  
@@ -164,16 +164,16 @@ function getJavacoreSummaryOutline(contents) {
 				line: i+1  
 			});
 			outline.push({
-				label: exitThread.substr(exitThread.indexOf(" ")),
+				label: EXITTHREAD.substr(EXITTHREAD.indexOf(" ")),
 				line: i+1
 			});
-			for (j=i; j < lines.length; j++) {
+			for (j=i+1; j < lines.length; j++) {
 				 line = lines[j];
-				 exitThread=lines[j];
-				 exitThread= String(exitThread).replace(/\s\s+/g, ' ');//remove extra spaces
+				 EXITTHREAD=lines[j];
+				 EXITTHREAD= String(EXITTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
 				if (/STACKTRACE /.exec(line)){
 					outline.push({
-						label: exitThread.substr(exitThread.indexOf(" ")),
+						label: EXITTHREAD.substr(EXITTHREAD.indexOf(" ")),
 						line: j+1  
 					});
 				};
@@ -236,7 +236,7 @@ function getJavacoreSummaryOutline(contents) {
 				line: i+1  
 			});
 			outline.push({
-				label: lines[i].substr(lines[i].indexOf("Entitled")),
+				label: CPUINFO.substr(CPUINFO.indexOf("Entitled")),
 				line: i+1  
 			});
 			continue;
@@ -286,7 +286,7 @@ function getJavacoreSummaryOutline(contents) {
 			});
 			continue;
 		};
-		//NATIVEMEMINFO
+		//NATIVEMEMINFO --- TO DO: call NATIVEMEMINFO script
 		if (/NATIVEMEMINFO/.exec(line)) {//0SECTION       NATIVEMEMINFO subcomponent dump routine
 			var NATIVEMEMINFO=line;
 			outline.push({
@@ -295,8 +295,7 @@ function getJavacoreSummaryOutline(contents) {
 			});
 			outline.push({
 				label: NATIVEMEMINFO.substr(NATIVEMEMINFO.indexOf(" NATIVEMEMINFO")+1),
-				line: i+1  
-				//TO DO: call NATIVEMEMINFO script
+				line: i+1
 			});
 			outline.push({
 				label: "-------------------------------------- ",
@@ -344,7 +343,7 @@ function getJavacoreSummaryOutline(contents) {
 			MEMORY = MEMORY.replace(/\s\s+/g, ' ');//consolidate spaces
 			if (/\(/.exec(MEMORY)){ //1STSEGTOTAL    Total memory:                    46759936 (0x0000000002C98000)
 				var reAllNumbersFoundInTheString = /\b\d+\b/g;//regular expression to get all the numbers from a string
-				MEMORY = / (.*?)( \()/.exec(memory);//everything between the first space and the first parenthesis
+				MEMORY = / (.*?)( \()/.exec(MEMORY);//everything between the first space and the first parenthesis
 				MEMORY = MEMORY[1]  + " = " + decToMb(reAllNumbersFoundInTheString.exec(lines[i]));//since the memory value is the first number in this string
 			}else{//1STHEAPFREE    Bytes of Heap Space Free: 8cfa600
 				var decValue = hexToDec(MEMORY.substr(MEMORY.indexOf(":")+1).trim());
