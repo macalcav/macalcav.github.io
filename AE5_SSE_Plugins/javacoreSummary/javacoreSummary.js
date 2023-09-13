@@ -303,9 +303,9 @@ function getJavacoreSummaryOutline(contents) {
 					}
 					line = lines[i++];
 				}
-				continue;
+				//continue;
 			}
-			if (/System.+exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
+			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
 				outline.push({
 					label: " ",
 					line: i+1  
@@ -534,7 +534,7 @@ function getJavacoreSummaryText(text){
 				}
 				continue;
 			}
-			if (/1XMCURTHDINFO/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
+			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
 				summary+=("\n\nEXIT\n--------------------");
 				while (/^NULL /.exec(line)==null){
 					var exitThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
