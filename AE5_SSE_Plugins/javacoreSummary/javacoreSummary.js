@@ -509,6 +509,17 @@ function getJavacoreSummaryText(text){
 				}
 				continue;
 			}
+			if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)
+				summary+=("\n\nEXIT CALL\n--------------------");
+				while (/^NULL /.exec(line)==null){
+					var currentThread= String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
+					if (/STACKTRACE /.exec(line){//|| /3XMTHREADINFO /.exec(line)){
+						summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;						
+					}
+					line = lines[i++];
+				}
+				continue;
+			}
 		}//end of contents loop
 		return summary;
 }	
