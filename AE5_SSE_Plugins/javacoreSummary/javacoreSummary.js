@@ -168,7 +168,7 @@ function getJavacoreSummaryOutline(contents) {
 				});
 				for (j=i; j < lines.length; j++) {
 					line = lines[j];
-					var exitThread= String(line).replace(/\s\s+/g, ' ');//remove extra spaces
+					var exitThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
 					if (/STACKTRACE /.exec(line)){
 						outline.push({
 							label: exitThread.substr(exitThread.indexOf(" ")),
@@ -179,6 +179,7 @@ function getJavacoreSummaryOutline(contents) {
 						break;
 					}
 				}
+				break;
 			}
 		}
 	        //CURRENT THREAD
@@ -210,6 +211,7 @@ function getJavacoreSummaryOutline(contents) {
 						break;
 					}
 				}
+				break;
 			}
 		}
 		
@@ -481,6 +483,7 @@ function getJavacoreSummaryText(text){
 						break;
 					}
 				}
+				break;
 			}
 		}
 	        //get CURRENT THREAD
@@ -498,6 +501,7 @@ function getJavacoreSummaryText(text){
 						break;
 					}
 				}
+				break;
 			}
 		}
 
