@@ -56,9 +56,10 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/1CIJAVAVERSION/.exec(line)) {//1CIJAVAVERSION JRE 1.6.0 Linux amd64-64 build jvmxa6460sr12-20121024_126067 (pxa6460sr12-20121025_01(SR12))
-			    lines[i]= String(lines[i]).replace(/\s\s+/g, ' ');//consolidate spaces
+				var JAVAVERSION=String(line)
+				JAVAVERSION= String(JAVAVERSION).replace(/\s\s+/g, ' ');//consolidate spaces
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf(" ")),
+					label: JAVAVERSION.substr(JAVAVERSION.indexOf(" ")),
 					line: i+1  
 				});
 				break;
@@ -80,9 +81,9 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];	
 			if (/3XHNUMCPUS/.exec(line)) {//3XHNUMCPUS       How Many       : 8
+				var NUMCPUS=String(line)
 				outline.push({
-					//label: match[1],
-					label: "CPUs: "+lines[i].substr(lines[i].indexOf(": ")+2),
+					label: "CPUs: "+NUMCPUS.substr(NUMCPUS.indexOf(": ")+2),
 					line: i+1  
 				});
 				break;
@@ -92,9 +93,9 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xms)/.exec(line)) {//2CIUSERARG               -Xms2048m
+				var XMS=String(line)
 				outline.push({
-					//label: match[1],
-					label: lines[i].substr(lines[i].indexOf("-X")),
+					label: XMS.substr(XMS.indexOf("-X")),
 					line: i+1  
 				});
 				break;
@@ -105,9 +106,9 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xmx)/.exec(line)) {//2CIUSERARG               -Xmx2048m
+				var XMX=String(line)
 				outline.push({
-					//label: match[1],
-					label: lines[i].substr(lines[i].indexOf("-X")),
+					label: XMX.substr(XMX.indexOf("-X")),
 					line: i+1  
 				});
 				break;
@@ -118,9 +119,9 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xnoclassgc)/.exec(line)) {//2CIUSERARG               -Xnoclassgc
+				var NOCLASSGC=String(line)
 				outline.push({
-					//label: match[1],
-					label: lines[i].substr(lines[i].indexOf("-X")),
+					label: NOCLASSGC.substr(NOCLASSGC.indexOf("-X")),
 					line: i+1  
 				});
 				break;
@@ -131,9 +132,9 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xdisableexplicitgc)/.exec(line)) {//2CIUSERARG               -Xdisableexplicitgc
+				var EXPLICITGC=String(line)
 				outline.push({
-					//label: match[1],
-					label: lines[i].substr(lines[i].indexOf("-X")),
+					label: EXPLICITGC.substr(EXPLICITGC.indexOf("-X")),
 					line: i+1  
 				});
 				break;
@@ -143,8 +144,9 @@ function getJavacoreSummaryOutline(contents) {
 		for (i=0; i < lines.length; i++) {
 			line = lines[i];
 			if (/(2CIUSERARG).+?(\-Xdump)/.exec(line)) {//2CIUSERARG               -Xdump...
+				var XDUMP=String(line)
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf("-X")),
+					label: XDUMP.substr(XDUMP.indexOf("-X")),
 					line: i+1  
 				});
 				break;
@@ -227,21 +229,21 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}	
 			if (/(MEMUSER\s{7}).+?(allocation)/.exec(line)){//5MEMUSER       |  |  |  +--Direct Byte Buffers: 29,753,776 bytes / 2462 allocations
-			    var MEMUSER=String(line)
-			    MEMUSER=MEMUSER.replace(/\s\s+/g, ' ');//consolidate spaces 
-			    var indexOfFirstSpace = MEMUSER.indexOf(" ");
-			    var indexOfColon = MEMUSER.indexOf(":");
-			    var indexOfBytes = MEMUSER.indexOf(" bytes");
-			    var byteValue=MEMUSER.substring(indexOfColon+2,indexOfBytes);//grab the byte value consider space after colon
-			    byteValue=byteValue.replace(/\,/g,'');//remove commas
-			    outline.push({
-			      label: MEMUSER.substring(indexOfFirstSpace, indexOfBytes)+"="+(byteValue/1024/1024).toFixed(2) + "mb",
-					  line: i+1  
-				  });
-			    continue;
+				var MEMUSER=String(line)
+			    	MEMUSER=MEMUSER.replace(/\s\s+/g, ' ');//consolidate spaces 
+			    	var indexOfFirstSpace = MEMUSER.indexOf(" ");
+			    	var indexOfColon = MEMUSER.indexOf(":");
+				var indexOfBytes = MEMUSER.indexOf(" bytes");
+			    	var byteValue=MEMUSER.substring(indexOfColon+2,indexOfBytes);//grab the byte value consider space after colon
+			    	byteValue=byteValue.replace(/\,/g,'');//remove commas
+			    	outline.push({
+					label: MEMUSER.substring(indexOfFirstSpace, indexOfBytes)+"="+(byteValue/1024/1024).toFixed(2) + "mb",
+					line: i+1  
+				});
+				continue;
 			}
 			if (/1STHEAPTYPE/.exec(line)||/1STSEGTYPE/.exec(line)) {//1STHEAPTYPE    Object Memory ... 1STHEAPTYPE Object Memory
-			  var memoryType = String(line)
+				var memoryType = String(line)
 				memoryType = memoryType.replace(/\s\s+/g, ' ');//remove multiple spaces
 				memoryType = memoryType.substr(memoryType.indexOf(" ")+1);//1STHEAPTYPE Object Memory ... Object Memory
 				outline.push({
@@ -280,12 +282,13 @@ function getJavacoreSummaryOutline(contents) {
 				continue;
 			}
 			if (/2LKPOOLTOTAL/.exec(line)) {//2LKPOOLTOTAL     Current total number of monitors: 2390
+				var POOLTOTAL=String(line)
 				outline.push({
 					label: " ",
 					line: i+1  
 				});
 				outline.push({
-					label: lines[i].substr(lines[i].indexOf("Current")),
+					label: POOLTOTAL.substr(POOLTOTAL.indexOf("Current")),
 					line: i+1  
 				});
 				continue;
@@ -293,7 +296,7 @@ function getJavacoreSummaryOutline(contents) {
 
 		}//end of contents loop
 		return outline;
-	}
+}
 	
 	
 	
