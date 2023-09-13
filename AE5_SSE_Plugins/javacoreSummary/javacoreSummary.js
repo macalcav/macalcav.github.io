@@ -125,7 +125,7 @@ function getJavacoreSummaryOutline(contents) {
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/(2CIUSERARG).+?(\-Xdisableexplicitgc)/.exec(line)) {//2CIUSERARG               -Xdisableexplicitgc
-			var EXPLICITGC=String(line);
+			var EXPLICITGC=line;
 			outline.push({
 				label: EXPLICITGC.substr(EXPLICITGC.indexOf("-X")),
 				line: i+1  
@@ -150,7 +150,7 @@ function getJavacoreSummaryOutline(contents) {
 		line = lines[i];
 		if (/System.exit/.exec(line)) {//4XESTACKTRACE                at java/lang/System.exit(System.java:380)	
 			var EXITTHREAD=line;
-			exitThread = String(EXITTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
+			EXITTHREAD = String(EXITTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
 			outline.push({
 				label: " ",
 				line: i+1  
@@ -169,7 +169,7 @@ function getJavacoreSummaryOutline(contents) {
 			});
 			for (j=i+1; j < lines.length; j++) {
 				 line = lines[j];
-				 EXITTHREAD=lines[j];
+				 EXITTHREAD=line;
 				 EXITTHREAD= String(EXITTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
 				if (/STACKTRACE /.exec(line)){
 					outline.push({
@@ -188,8 +188,8 @@ function getJavacoreSummaryOutline(contents) {
 	 for (i=0; i < lines.length; i++) {
 		 line = lines[i];
 	         if (/1XMCURTHDINFO/.exec(line)) {//1XMCURTHDINFO  Current thread
-			 var currentThread=lines[i+1];
-			 currentThread= String(currentThread).replace(/\s\s+/g, ' ');//remove extra spaces
+			 var CURRENTTHREAD=line;
+			 currentThread= String(CURRENTTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
 			 outline.push({
 				 label: " ",
 				 line: i+1  
@@ -203,16 +203,16 @@ function getJavacoreSummaryOutline(contents) {
 				 line: i+1
 			 });
 			 outline.push({
-				 label: currentThread.substr(currentThread.indexOf(" ")),
+				 label: CURRENTTHREAD.substr(CURRENTTHREAD.indexOf(" ")),
 				 line: i+1
 			 });
 			 for (j=i+2; j < lines.length; j++) {
 				 line = lines[j];
-				 currentThread=lines[j];
-				 currentThread= String(currentThread).replace(/\s\s+/g, ' ');//remove extra spaces
+				 CURRENTTHREAD=line;
+				 CURRENTTHREAD= String(CURRENTTHREAD).replace(/\s\s+/g, ' ');//remove extra spaces
 				if (/STACKTRACE /.exec(line)){
 					outline.push({
-						label: currentThread.substr(currentThread.indexOf(" ")),
+						label: CURRENTTHREAD.substr(CURRENTTHREAD.indexOf(" ")),
 						line: j+1  
 					});
 				};
@@ -279,7 +279,7 @@ function getJavacoreSummaryOutline(contents) {
 		//RLIMIT
 		if (/2CIUSERLIMIT/.exec(line)) {//2CIUSERLIMIT   RLIMIT_AS                      18077286400            unlimited
 			var RLIMIT=line;
-			RLIMIT = String(line.substr(RLIMIT.indexOf(" RLIMIT")+1));
+			RLIMIT = String(RLIMIT.substr(RLIMIT.indexOf(" RLIMIT")+1));
 			outline.push({
 				label: RLIMIT,
 				line: i+1  
@@ -344,7 +344,7 @@ function getJavacoreSummaryOutline(contents) {
 			if (/\(/.exec(MEMORY)){ //1STSEGTOTAL    Total memory:                    46759936 (0x0000000002C98000)
 				var reAllNumbersFoundInTheString = /\b\d+\b/g;//regular expression to get all the numbers from a string
 				MEMORY = / (.*?)( \()/.exec(MEMORY);//everything between the first space and the first parenthesis
-				MEMORY = MEMORY[1]  + " = " + decToMb(reAllNumbersFoundInTheString.exec(lines[i]));//since the memory value is the first number in this string
+				MEMORY = MEMORY[1]  + " = " + decToMb(reAllNumbersFoundInTheString.exec(MEMORY));//since the memory value is the first number in this string
 			}else{//1STHEAPFREE    Bytes of Heap Space Free: 8cfa600
 				var decValue = hexToDec(MEMORY.substr(MEMORY.indexOf(":")+1).trim());
 				MEMORY = MEMORY.substr(MEMORY.indexOf(" "), MEMORY.indexOf(":")+ 1) + "=" + decToMb(decValue);	
