@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>TEXT PRETTY</title>
+<script type="text/javascript" src="utilities/plugin.js"></script>
+<script>
+/*eslint-env browser, amd*/
+/*global eclipse*/	
+
+//********************
+//********************
+//INSTRUCTIONS:
+//highlight text -> highlight '{"Id":78912,"Customer":"Jason Sweet", "Quantity":1,"Price":18.00}' -> returns 
+// {
+//   "Id": 78912,
+//   "Customer": "Jason Sweet",
+//   "Quantity": 1,
+//   "Price": 18
+// }
+//
+//********************
+//********************
+
+
+window.onload = function() {
+	var headers = { 
+    name: "TEXT PRETTY", 
+    version: "1.0", 
+    description: "Highlight text String to format  - macalcav@us.ibm.com" 
+  };
+	var provider = new eclipse.PluginProvider(headers);	
+	
+	//Menu Item "SSE Text Conversion Commands"
+	provider.registerServiceProvider("orion.edit.command.category", {}, {
+		id : "com.ibm.isa.sse.text.commands", 
+		name: "SSE Text Conversion Commands",
+		tooltip : "SSE Text Conversion Commands"
+	});
+	
+	//JSON PRETTY	
+	var serviceImpl = {
+	    run: function(json_str) {
+	      json_obj = JSON.parse(json_str);
+	    	return json_str + "\n\n" + JSON.stringify(json_obj, null, 2)+"\n\n";
+		}
+	};
+	var serviceProperties = {
+		contentType: ["text/plain"],
+	  	name: "JSON PRETTY",
+	  	id: "com.ibm.isa.sse.text.commands.jsonPretty",
+	  	parentPath : "com.ibm.isa.sse.text.commands",
+	  	key : [ "j", true, true, false ]//ctrl+shift+j
+	};		
+	
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+  provider.connect();	
+};
+</script>
+</head>
+  <body>
+    <h1>TextPretty.html from AE5_SSE_Plugins by Michele Calcavecchia - macalcav@us.ibm.com</h1>
+  </body>
+</html>
