@@ -25,10 +25,10 @@
 
 window.onload = function() {
 	var headers = { 
-    name: "TEXT PRETTY", 
-    version: "1.0", 
-    description: "Highlight text String to format  - macalcav@us.ibm.com" 
-  };
+		name: "TEXT PRETTY", 
+		version: "1.0", 
+		description: "Highlight text String to format  - macalcav@us.ibm.com" 
+	};
 	var provider = new eclipse.PluginProvider(headers);	
 	
 	//Menu Item "SSE Text Conversion Commands"
@@ -40,13 +40,13 @@ window.onload = function() {
 	
 	//JSON PRETTY	
 	var serviceImpl = {
-	    run: function(json_str) {
-	      json_obj = JSON.parse(json_str);
-	    	return json_str + "\n\n" + JSON.stringify(json_obj, null, 2)+"\n\n";
+		run: function(json_str) {
+			json_obj = JSON.parse(json_str);
+			return json_str + "\n\n" + JSON.stringify(json_obj, null, 2)+"\n\n";
 		}
 	};
 	var serviceProperties = {
-		contentType: ["text/plain"],
+		//contentType: ["text/plain"],
 	  	name: "JSON PRETTY",
 	  	id: "com.ibm.isa.sse.text.commands.jsonPretty",
 	  	parentPath : "com.ibm.isa.sse.text.commands",
@@ -54,7 +54,7 @@ window.onload = function() {
 	};		
 	
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
-  provider.connect();	
+	provider.connect();	
 };
 </script>
 </head>
