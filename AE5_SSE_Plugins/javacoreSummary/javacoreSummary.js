@@ -404,7 +404,7 @@ function getJavacoreSummaryText(text){
 			summary+=("\n"+"server name: "+ serverName);	  
 			break;
 		}
-	}
+	};
 	//get process id 
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
@@ -413,7 +413,7 @@ function getJavacoreSummaryText(text){
 			summary+=("\n"+ pid);	  
 			break;
 		}
-	}
+	};
 	//get hostname
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
@@ -421,8 +421,8 @@ function getJavacoreSummaryText(text){
 			var hostName = line.substring(line.indexOf("HOSTNAME"));
 			summary+=("\n"+ hostName);	  
 			break;
-		}
-	}	
+		};
+	};
 	//get signal reason
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];	
@@ -430,8 +430,8 @@ function getJavacoreSummaryText(text){
 			var dumpReason = String(lines[i].split('(').slice(0,1));//1TISIGINFO     Dump Event "user" 
 			summary+=("\n"+	dumpReason.substr(dumpReason.indexOf("Dump")));
 			break;
-		}
-	}	
+		};
+	};
 	//get java version
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
@@ -439,64 +439,64 @@ function getJavacoreSummaryText(text){
 			lines[i] = String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
 			summary+=("\n"+	lines[i].substring(lines[i].indexOf(" ")+1));
 			break;
-		}
-	}
+		};
+	};
 	//get OS version
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];	
 		if (/2XHOSLEVEL/.exec(line)) {//2XHOSLEVEL     OS Level         : Linux 3.0.38-0.5-default
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf(": ")+2));
 			break;	    				
-		}
-	}	
+		};
+	};
 	//get #CPU
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];	
 		if (/3XHNUMCPUS/.exec(line)) {//3XHNUMCPUS       How Many       : 8
 			summary+=("\nCPUs: "+lines[i].substr(lines[i].indexOf(": ")+2));
 			break;
-		}
-	}
+		};
+	};
 	//get min heap
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/(2CIUSERARG).+?(\-Xms)/.exec(line)) {//2CIUSERARG               -Xms2048m
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("-X")));
 			break;
-		}
-	}
+		};
+	};
 	//get max heap
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/(2CIUSERARG).+?(\-Xmx)/.exec(line)) {//2CIUSERARG               -Xmx2048m
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("-X")));
 			break;
-		}
-	}
+		};
+	};
 	//get noclassgc
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/(2CIUSERARG).+?(\-Xnoclassgc)/.exec(line)) {//2CIUSERARG               -Xnoclassgc
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("-X")));
 			break;
-		}
-	}
+		};
+	};
 	//get disableExplicitGc
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/(2CIUSERARG).+?(\-Xdisableexplicitgc)/.exec(line)) {//2CIUSERARG               -Xdisableexplicitgc
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("-X")));
 			break;
-		}
-	}
+		};
+	};
 	//get -Xdump
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/(2CIUSERARG).+?(\-Xdump)/.exec(line)) {//2CIUSERARG               -Xdump...
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("-X"))	);
 			break;
-		}
-	}
+		};
+	};
 	//get EXIT
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
@@ -509,14 +509,14 @@ function getJavacoreSummaryText(text){
 				var exitStackThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
 				if (/STACKTRACE /.exec(line)){
 					summary+="\n"+exitStackThread.substr(exitStackThread.indexOf(" ")) ;						
-				}
+				};
 				if (/^NULL/.exec(line){
 					break;
-				}
-			}
+				};
+			};
 			break;
-		}
-	}
+		};
+	};
 	//get CURRENT THREAD
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
@@ -527,49 +527,49 @@ function getJavacoreSummaryText(text){
 				var currentThread= String(lines[j]).replace(/\s\s+/g, ' ');//remove extra spaces
 				if (/STACKTRACE /.exec(line)){
 					summary+="\n"+currentThread.substr(currentThread.indexOf(" ")) ;	
-				}
+				};
 				if (/^NULL/.exec(line){
 					break;
-				}
-			}
+				};
+			};
 			break;
-		}
-	}
-       //REST OF CONTENTS LOOP
+		};
+	};
+	//REST OF CONTENTS LOOP
 	for (i=0; i < lines.length; i++) {
 		line = lines[i];
 		if (/1CICPUINFO/.exec(line)) {//1CICPUINFO     Entitled CPU Information
 			summary+=("\n~");
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("Entitled")));
 			continue;
-		}				
+		};				
 		if (/2CIPHYSCPU/.exec(line)||/2CIONLNCPU/.exec(line)||/2CIBOUNDCPU/.exec(line)||/2CIENTITLECPU/.exec(line)||/2CITARGETCPU/.exec(line)) {
 			//2CIPHYSCPU     Physical CPUs: 6
 			var cpu = lines[i].substr(lines[i].indexOf("CPU  ")+3).trim();
 			summary+=("\n"+ cpu);
 			continue;
-		}
+		};
 		if (/1CIUSERLIMITS/.exec(line)) {//1CIUSERLIMITS  User Limits (in bytes except for NOFILE and NPROC)
 			summary+=("\n");
 			summary+=("\n"+lines[i].substr(lines[i].indexOf("User Limits")));
 			continue;
-		}
+		};
 		if (/soft limit/.exec(line)) {//NULL           type                            soft limit           hard limit
 			summary+=("\n--------------------------------------------------");
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("type")));
 			continue;
-		}
+		};
 		if (/2CIUSERLIMIT/.exec(line)) {//2CIUSERLIMIT   RLIMIT_AS                      18077286400            unlimited
 		    var rlimit = String(line.substr(line.indexOf(" RLIMIT")+1));
 		    summary+=("\n"+	rlimit);
 			continue;
-		}
+		};
 		if (/NATIVEMEMINFO/.exec(line)) {//0SECTION       NATIVEMEMINFO subcomponent dump routine
 			summary+=("\n");
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf(" NATIVEMEMINFO")+1));
 			summary+=("\n--------------------------------------\n");
 			continue;
-		}	
+		};
 		if (/(MEMUSER\s{7}).+?(allocation)/.exec(line)){//5MEMUSER       |  |  |  +--Direct Byte Buffers: 29,753,776 bytes / 2462 allocations
 		    lines[i]=lines[i].replace(/\s\s+/g, ' ');//consolidate spaces 
 		    var indexOfFirstSpace = lines[i].indexOf(" ");
@@ -579,7 +579,7 @@ function getJavacoreSummaryText(text){
 		    byteValue=byteValue.replace(/\,/g,'');//remove commas
 		    summary+=(lines[i].substring(indexOfFirstSpace, indexOfBytes)+"="+(byteValue/1024/1024).toFixed(2) + "mb\n");
 		    continue;
-		}
+		};
 		if (/1STHEAPTYPE/.exec(line)||/1STSEGTYPE/.exec(line)) {//1STHEAPTYPE    Object Memory ... 1STHEAPTYPE Object Memory
 			var memoryType = String(line).replace(/\s\s+/g, ' ');//remove multiple spaces
 			memoryType = memoryType.substr(memoryType.indexOf(" ")+1);//1STHEAPTYPE Object Memory ... Object Memory
@@ -587,7 +587,7 @@ function getJavacoreSummaryText(text){
 			summary+=("\n"+	memoryType);
 			summary+=("\n-------------");
 			continue;
-		}
+		};
 		if (/1STHEAPALLOC/.exec(line)||/1STHEAPTOTAL/.exec(line)||/1STSEGTOTAL/.exec(line)||/1STSEGINUSE/.exec(line)||/1STSEGFREE/.exec(line)||/1STHEAPINUSE/.exec(line)||/1STHEAPFREE/.exec(line)) {
 			var memory = String(lines[i]).replace(/\s\s+/g, ' ');//remove extra spaces
 			if (/\(/.exec(memory)){//1STSEGTOTAL    Total memory:                    46759936 (0x0000000002C98000)
@@ -601,14 +601,15 @@ function getJavacoreSummaryText(text){
 			
 			summary+=("\n"+	memory);
 			continue;
-		}
+		};
 		if (/2LKPOOLTOTAL/.exec(line)) {//2LKPOOLTOTAL     Current total number of monitors: 2390
 			summary+=("\n");
 			summary+=("\n"+	lines[i].substr(lines[i].indexOf("Current")));
 			continue;
-		}
+		};
 	
-	}//end of contents loop
+	};//end of contents loop
+
 
 	
 	return summary;
