@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>TEXT PRETTY</title>
 <script type="text/javascript" src="utilities/plugin.js"></script>
+<script type="text/javascript" src="textPretty/csvToColumns.js"></script>
 <script>
 /*eslint-env browser, amd*/
 /*global eclipse*/	
@@ -52,8 +53,24 @@ window.onload = function() {
 	  	parentPath : "com.ibm.isa.sse.text.commands",
 	  	key : [ "j", true, true, false ]//ctrl+shift+j
 	};		
-	
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+
+        //CSV TO COLUMNS
+	var serviceImpl = {
+		run: function(csvText) {
+			columnizedCsvText = makeColumnsFromCsvText(csvText);
+			return columnizedCsvText;
+		}
+	};
+	var serviceProperties = {
+		//contentType: ["text/plain"],
+	  	name: "CSV TO COLUMNS",
+	  	id: "com.ibm.isa.sse.text.commands.csvToColumns",
+	  	parentPath : "com.ibm.isa.sse.text.commands",
+	  	key : [ "k", true, true, false ]//ctrl+shift+j
+	};		
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+	
 	provider.connect();	
 };
 </script>
