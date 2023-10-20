@@ -125,6 +125,15 @@ window.onload = function() {
 					continue;
 				}
 
+				//product = IBM Business Automation Workflow Server Container 8.6.4.22020, WebSphere Application Server 23.0.0.3 (wlp-1.0.75.cl230320230319-1900)
+				if (/^product =/.exec(line)){
+					logOutline.push({
+						label: line,
+						line: i+1
+					});
+					continue;
+				}				
+
 				//[4/29/15 6:56:09:650 EDT] 00000000 ManagerAdmin I TRAS0017I: The startup trace state is *=info.
 				if (/TRAS0017I/.exec(line)){
 					condensedString = timeStamp(line)+" "+infoMessageCode(line)+" "+traceString(line);
@@ -134,6 +143,24 @@ window.onload = function() {
 					});
 					continue;
 				}
+
+				//trace.specification = *=info:com.ibm.bpm.*=all:com.ibm.casemgmt.*=all:com.lombardisoftware.*=all
+				if (/^trace.specification =/.exec(line)){
+					logOutline.push({
+						label: line,
+						line: i+1
+					});
+					continue;
+				}	
+
+				//java.version = 1.8.0_351
+				if (/^java.version =/.exec(line)){
+					logOutline.push({
+						label: line,
+						line: i+1
+					});
+					continue;
+				}					
 
 				//[9/15/11 8:42:11:727 CDT] 00000000 WsServerImpl A WSVR0001I: Server server1 open for e-business
 				//[12/22/11 6:01:49:033 CST] 00000006 ServerCollabo A WSVR0024I: Server server1 stopped
