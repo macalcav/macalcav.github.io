@@ -1,3 +1,3 @@
 function replaceWithNewLine(textWithNewLineCharacters){
-  return lines = textWithNewLineCharacters.split("\n");
+  return textWithNewLineCharacters.replace(/\\n/g, "\n");
 }
