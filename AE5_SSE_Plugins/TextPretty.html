@@ -5,6 +5,7 @@
 <title>TEXT PRETTY</title>
 <script type="text/javascript" src="utilities/plugin.js"></script>
 <script type="text/javascript" src="textPretty/csvToColumns.js"></script>
+<script type="text/javascript" src="textPretty/newLineReplace.js"></script>	
 <script>
 /*eslint-env browser, amd*/
 /*global eclipse*/	
@@ -70,6 +71,20 @@ window.onload = function() {
 	  	key : [ "k", true, true, false ]//ctrl+shift+j
 	};		
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);
+
+        //NEW LINE REPLACE
+	var serviceImpl = {
+		run: function(textWithNewLineCharacters) {
+			newLineText = replaceWithNewLine(textWithNewLineCharacters);
+			return newLineText;
+		}
+	};
+	var serviceProperties = {
+	  	name: "NEW LINE REPLACE",
+	  	id: "com.ibm.isa.sse.text.commands.newLineReplace",
+	  	parentPath : "com.ibm.isa.sse.text.commands"
+	};		
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);	
 	
 	provider.connect();	
 };
