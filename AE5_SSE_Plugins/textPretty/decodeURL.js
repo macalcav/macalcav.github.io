@@ -1,3 +1,3 @@
 function decodeUrl(encodedUrl){
-  return decodeURI(encodedUrl);
+  return decodeURIComponent(encodedUrl);
 }
