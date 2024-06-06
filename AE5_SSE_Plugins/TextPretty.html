@@ -6,6 +6,7 @@
 <script type="text/javascript" src="utilities/plugin.js"></script>
 <script type="text/javascript" src="textPretty/csvToColumns.js"></script>
 <script type="text/javascript" src="textPretty/newLineReplace.js"></script>	
+<script type="text/javascript" src="textPretty/decodeURL.js"></script>		
 <script>
 /*eslint-env browser, amd*/
 /*global eclipse*/	
@@ -82,6 +83,20 @@ window.onload = function() {
 	var serviceProperties = {
 	  	name: "NEW LINE REPLACE",
 	  	id: "com.ibm.isa.sse.text.commands.newLineReplace",
+	  	parentPath : "com.ibm.isa.sse.text.commands"
+	};		
+	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);	
+
+	//URL DECODE
+	var serviceImpl = {
+		run: function(encodedUrl) {
+			decodedUrl = decodeUrl(encodedUrl);
+			return decodedUrl;
+		}
+	};
+	var serviceProperties = {
+	  	name: "DECODE URL",
+	  	id: "com.ibm.isa.sse.text.commands.decodeUrl",
 	  	parentPath : "com.ibm.isa.sse.text.commands"
 	};		
 	provider.registerServiceProvider("orion.edit.command",serviceImpl, serviceProperties);	
